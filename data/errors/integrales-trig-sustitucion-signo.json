@@ -1,0 +1,79 @@
+{
+  "id": "integrales-trig-sustitucion-signo",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Integrales trigonométricas",
+  "titulo": "Signo o constante incorrecta en sustitución trigonométrica",
+  "descripcion_corta": "Al hacer la sustitución trigonométrica u = sen x o u = cos x, se comete un error en el signo de la diferencial o se olvida ajustar los límites correctamente.",
+  "prerrequisitos": [
+    "Sustitución correcta: u = sen x ⇒ du = cos x dx",
+    "Sustitución correcta: u = cos x ⇒ du = -sen x dx",
+    "Ajuste de límites cuando se usan límites definidos",
+    "Regla de paridad aplicada previamente"
+  ],
+  "sintomas": [
+    "La solución parece correcta pero falla en la verificación por derivación",
+    "Los límites de integración no se ajustan correctamente",
+    "Aparece un signo negativo inesperado en el resultado",
+    "La constante de integración parece 'compensar' otros errores"
+  ],
+  "patron_error": {
+    "latex": "\\int \\sen^{3} x \\, dx \\implies u = \\cos x, \\quad du = \\cos x \\, dx \\\\ \\text{(error: se olvida el signo - en du)}\\\\ \\int (1 - u^{2}) du = u - \\frac{1}{3} u^{3} + C = \\cos x - \\frac{1}{3} \\cos^{3} x + C",
+    "explicacion": "Se escribe du = cos x dx cuando debería ser du = -sen x dx. El error lleva a una solución que parece correcta pero que falla en la verificación porque la derivada no reproduce el integrando original."
+  },
+  "deteccion": {
+    "tipo": "Verificación por derivación",
+    "reglas": [
+      "Derivar la solución obtenida y comparar con el integrando original",
+      "Verificar que du tenga el signo correcto según la sustitución",
+      "Comprobar que los límites se ajusten correctamente si hay límites definidos",
+      "Contar si aparecen constantes inesperadas que 'compensan' errores"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Recordar que d(cos x) = -sen x dx y d(sen x) = cos x dx, ajustando el signo y los límites apropiadamente",
+    "pistas": [
+      "Si u = cos x, entonces du = -sen x dx (cuidado con el signo -)",
+      "Si u = sen x, entonces du = cos x dx (signo positivo)",
+      "Cuando cambies límites, asegúrate de que correspondan a la nueva variable u",
+      "Si la verificación falla, revisa primero el signo de du"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Sustituciones trigonométricas correctas:}\\\\ u = \\sin x \\implies du = \\cos x \\, dx \\\\ u = \\cos x \\implies du = -\\sin x \\, dx \\\\ \\text{Para límites: si } x \\text{ va de } a \\text{ a } b, \\text{ entonces } u \\text{ va de } \\sin a \\text{ a } \\sin b",
+      "nota": "El signo de du depende de qué función trigonométrica uses como variable. Para u = cos x, el signo es negativo porque la derivada de cos x es -sen x. Este es uno de los errores más comunes en integración trigonométrica."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Calcula ∫sen³x dx con la sustitución correcta",
+      "solucion": "sen³x = sen²x · sen x = (1 - cos²x) sen x. u = cos x, du = -sen x dx → -du = sen x dx. Resultado: ∫(1 - u²)(-du) = -∫(1 - u²)du = -[u - (1/3)u³] + C = -cos x + (1/3)cos³x + C",
+      "dificultad": "media"
+    },
+    {
+      "enunciado": "Calcula ∫cos⁵x dx aplicando correctamente la sustitución",
+      "solucion": "cos⁵x = cos⁴x · cos x = (cos²x)² · cos x = [(1 + cos 2x)/2]² · cos x. u = sen x, du = cos x dx. Resultado: ∫[(1 + cos 2x)/2]² du (con x en términos de u). Mejor: ∫cos⁴x cos x dx, u = sen x, du = cos x dx. Resultado: ∫(1 - sen²x)² du = ∫(1 - 2u² + u⁴) du = u - (2/3)u³ + (1/5)u⁵ + C",
+      "dificultad": "alta"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Derivación y evaluación numérica",
+    "sugerido": "Deriva tu solución y compara con el integrando. Evalúa numéricamente en x = π/4",
+    "criterio": "La derivada debe ser idéntica al integrando original"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integrales trigonométricas",
+      "sustitución trigonométrica",
+      "signo de diferencial",
+      "u = sen x",
+      "u = cos x",
+      "error procedimental",
+      "verificación",
+      "semana 2"
+    ]
+  }
+}

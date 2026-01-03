@@ -1,0 +1,78 @@
+{
+  "id": "integrales-trig-separacion-factor",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Integrales trigonométricas",
+  "titulo": "Separación incorrecta del factor para sustitución trigonométrica",
+  "descripcion_corta": "Al aplicar la regla de paridad, se separa incorrectamente el factor trigonométrico o se elige el factor errado para la sustitución, complicando innecesariamente la resolución.",
+  "prerrequisitos": [
+    "Regla de paridad aplicada correctamente",
+    "Separación adecuada: sen^m x = sen^{m-1} x · sen x (si m impar)",
+    "Separación adecuada: cos^n x = cos^{n-1} x · cos x (si n impar)",
+    "Sustitución correcta: u = cos x o u = sen x según corresponda"
+  ],
+  "sintomas": [
+    "La sustitución no simplifica la integral como se esperaba",
+    "Aparecen términos con derivadas que no coinciden",
+    "La integral resultante es más complicada que la original",
+    "Se obtiene una respuesta incorrecta que no satisface la verificación"
+  ],
+  "patron_error": {
+    "latex": "\\int \\sen^{4} x \\cos x \\, dx \\implies \\text{(error: se separa } \\cos x \\text{ cuando debería ser } \\sen x\\text{)}\\\\ \\sen^{4} x = \\sen^{3} x \\cdot \\sen x, \\quad u = \\cos x",
+    "explicacion": "Se comete el error de separar el factor cos x cuando el exponente impar es el de sen x (4 es par, pero se confunde). La regla correcta es: cuando el exponente de sen x es impar, se separa sen x; cuando el exponente de cos x es impar, se separa cos x."
+  },
+  "deteccion": {
+    "tipo": "Verificación de la regla de paridad aplicada",
+    "reglas": [
+      "Verificar cuál exponente es impar (m en sen^m x o n en cos^n x)",
+      "Comprobar que se separó el factor correcto (sen x si m impar, cos x si n impar)",
+      "Revisar que la sustitución corresponda al factor separado",
+      "Contar que el exponente restante sea par después de la separación"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Aplicar estrictamente la regla: separa el factor correspondiente al exponente impar, y usa la sustitución que haga que ese factor aparezca como diferencial",
+    "pistas": [
+      "Identifica claramente: ¿m es impar o n es impar?",
+      "Si m impar: separa sen x y usa u = cos x (porque d(cos x) = -sen x dx)",
+      "Si n impar: separa cos x y usa u = sen x (porque d(sen x) = cos x dx)",
+      "Después de separar, verifica que el factor restante tenga exponente par"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Separación correcta según paridad:}\\\\ \\int \\sen^{m} x \\cos^{n} x \\, dx = \\begin{cases} \\int \\sen^{m-1} x \\cos^{n} x \\cdot \\sen x \\, dx, & m \\text{ impar} \\\\ \\int \\sen^{m} x \\cos^{n-1} x \\cdot \\cos x \\, dx, & n \\text{ impar} \\end{cases}\\\\ \\text{Sustitución: } u = \\begin{cases} \\cos x & m \\text{ impar} \\\\ \\sen x & n \\text{ impar} \\end{cases}",
+      "nota": "El factor que separas debe ser exactamente el que aparecerá en la diferencial de tu sustitución. Si separas sen x, necesitas que aparezca d(cos x) = -sen x dx."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Calcula ∫sen⁴x cos x dx separando correctamente el factor",
+      "solucion": "cos x tiene exponente impar (1), así que: sen⁴x cos x = sen⁴x cos⁰x · cos x. u = sen x, du = cos x dx. Resultado: ∫u⁴ du = (1/5)u⁵ + C = (1/5)sen⁵x + C",
+      "dificultad": "media"
+    },
+    {
+      "enunciado": "Calcula ∫sen x cos⁴x dx aplicando la separación correcta",
+      "solucion": "sen x tiene exponente impar (1), así que: sen x cos⁴x = sen⁰x cos⁴x · sen x. u = cos x, du = -sen x dx → -du = sen x dx. Resultado: -∫u⁴ du = -(1/5)u⁵ + C = -(1/5)cos⁵x + C",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Derivación de la solución",
+    "sugerido": "Deriva tu resultado y verifica que obtengas exactamente la expresión trigonométrica original",
+    "criterio": "Cada término debe derivarse correctamente manteniendo la estructura algebraica"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integrales trigonométricas",
+      "separación de factor",
+      "regla de paridad",
+      "sustitución trigonométrica",
+      "sen^m cos^n",
+      "error procedimental",
+      "semana 2"
+    ]
+  }
+}

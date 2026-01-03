@@ -1,0 +1,85 @@
+{
+  "id": "integrales-trig-partes-innecesario",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Integrales trigonométricas",
+  "titulo": "Aplicar integración por partes cuando la integral trigonométrica se resuelve por identidades",
+  "descripcion_corta": "Se aplica integración por partes a integrales trigonométricas que se pueden resolver más eficientemente usando identidades trigonométricas o la regla de paridad.",
+  "prerrequisitos": [
+    "Reconocimiento de integrales trigonométricas estándar",
+    "Priorización: identidades > regla de paridad > integración por partes",
+    "Identidades dobles: sen 2x = 2 sen x cos x, etc.",
+    "Reducción de potencias usando identidades pitagóricas"
+  ],
+  "sintomas": [
+    "La integral se vuelve innecesariamente compleja",
+    "Se requieren múltiples aplicaciones de integración por partes",
+    "Aparecen constantes o términos que se cancelan",
+    "La solución final es algebraicamente equivalente pero mucho más complicada"
+  ],
+  "patron_error": {
+    "latex": "\\int \\sen^{2} x \\, dx \\implies \\text{(error: usar integración por partes)}\\\\ u = \\sen x, \\ dv = \\sen x \\, dx \\\\ \\text{En lugar de: } \\int \\sen^{2} x \\, dx = \\int \\frac{1 - \\cos 2x}{2} \\, dx",
+    "explicacion": "Se aplica integración por partes a ∫sen²x dx, que requiere múltiples pasos y es más complicado que usar la identidad sen²x = (1 - cos 2x)/2, que se resuelve directamente."
+  },
+  "deteccion": {
+    "tipo": "Análisis de complejidad vs. técnica disponible",
+    "reglas": [
+      "Preguntar: ¿esta integral tiene identidades trigonométricas que la simplifiquen?",
+      "Verificar si aparecen potencias pares de sen x o cos x",
+      "Contar si la integración por partes requiere más de 2 pasos",
+      "Comparar con la solución usando identidades: ¿es mucho más simple?"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Seguir la jerarquía: primero identidades trigonométricas, luego regla de paridad, finalmente integración por partes como último recurso",
+    "pistas": [
+      "Para potencias pares: usa sen²x = (1 - cos 2x)/2 o cos²x = (1 + cos 2x)/2",
+      "Para productos sen x cos x: usa sen 2x = 2 sen x cos x",
+      "Si la integral por partes requiere más de 2 pasos, busca identidad",
+      "Recuerda: las integrales trigonométricas suelen resolverse con identidades, no con partes"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Jerarquía para integrales trigonométricas:}\\\\ 1.\\ \\text{Identidades: } \\sin^{2} x = \\frac{1 - \\cos 2x}{2} \\\\ 2.\\ \\text{Regla de paridad: para exponentes impares} \\\\ 3.\\ \\text{Integración por partes (último recurso)} \\\\ \\text{Ejemplo: } \\int \\sin^{2} x \\, dx = \\frac{x}{2} - \\frac{\\sin 2x}{4} + C",
+      "nota": "La integración por partes es poderosa pero no debería ser la primera opción para integrales trigonométricas. La mayoría se resuelven con identidades mucho más eficientemente."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Calcula ∫sen²x dx usando el método más eficiente",
+      "solucion": "Usa identidad: sen²x = (1 - cos 2x)/2. Resultado: (1/2)∫(1 - cos 2x)dx = (1/2)[x - (1/2)sen 2x] + C = (1/2)x - (1/4)sen 2x + C",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Calcula ∫sen x cos x dx usando identidad en lugar de partes",
+      "solucion": "Usa identidad: sen x cos x = (1/2) sen 2x. Resultado: (1/2)∫sen 2x dx = (1/2)·(-1/2)cos 2x + C = -1/4 cos 2x + C",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "¿Por qué es ineficiente usar integración por partes en ∫sen²x dx?",
+      "solucion": "Requiere: u = sen x, dv = sen x dx → du = cos x dx, v = -cos x. Resultado: -sen x cos x - ∫(-cos x) cos x dx = -sen x cos x + ∫cos²x dx. Ahora hay que integrar cos²x, que requiere otra identidad o más pasos. Total: mucho más trabajo que usar la identidad directamente.",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Comparación de resultados",
+    "sugerido": "Resuelve la integral con diferentes métodos y verifica que des resultados equivalentes",
+    "criterio": "Todas las soluciones correctas deben ser algebraicamente equivalentes"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integrales trigonométricas",
+      "elección de técnica",
+      "identidades trigonométricas",
+      "sobrecomplicación",
+      "jerarquía de métodos",
+      "sen²x",
+      "cos²x",
+      "error conceptual",
+      "semana 2"
+    ]
+  }
+}
