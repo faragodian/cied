@@ -1,0 +1,76 @@
+{
+  "id": "edo-factor-integrante-signo",
+  "curso": "Ecuaciones Diferenciales",
+  "tema": "Ecuaciones de Primer Orden",
+  "subtema": "Ecuaciones Lineales",
+  "titulo": "Error en el factor integrante: olvidar considerar el signo",
+  "descripcion_corta": "Al resolver ecuaciones diferenciales lineales de primer orden, se olvida considerar el signo correcto en el factor integrante, llevando a una solución incorrecta.",
+  "prerrequisitos": [
+    "Ecuaciones diferenciales lineales de primer orden",
+    "Método del factor integrante",
+    "Integración básica"
+  ],
+  "sintomas": [
+    "La ecuación diferencial no se resuelve correctamente",
+    "El factor integrante parece 'casi correcto' pero da una solución errónea",
+    "La constante de integración no compensa el error",
+    "La verificación no satisface la ecuación original"
+  ],
+  "patron_error": {
+    "latex": "\\frac{dy}{dx} + P(x)y = Q(x) \\implies \\mu(x) = e^{\\int P(x)\\,dx}",
+    "explicacion": "El error común ocurre cuando se calcula el factor integrante sin considerar el signo correcto de P(x), especialmente cuando P(x) es negativo o complejo."
+  },
+  "deteccion": {
+    "tipo": "Verificación algebraica y diferencial",
+    "reglas": [
+      "Verificar que d/dx[μy] = μQ(x)",
+      "Comprobar que la solución satisface la ED original",
+      "Revisar el signo del coeficiente de y en la forma estándar",
+      "Comparar con soluciones conocidas similares"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Revisar sistemáticamente el proceso de conversión a forma estándar y el cálculo del factor integrante",
+    "pistas": [
+      "Asegurarse de que la ED esté en la forma: dy/dx + P(x)y = Q(x)",
+      "Identificar correctamente el signo de P(x)",
+      "Calcular ∫P(x)dx con atención al signo",
+      "Verificar cada paso de la integración"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Para } \\frac{dy}{dx} + P(x)y = Q(x), \\text{ el factor integrante es } \\mu(x) = e^{\\int P(x)\\,dx}",
+      "nota": "El signo de P(x) es crucial. Si P(x) = -2x, entonces μ(x) = e^(-∫2x dx) = e^(-x²), no e^(x²)."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Resuelve: dy/dx - 2xy = x",
+      "solucion": "Forma estándar: dy/dx + (-2x)y = x, luego μ = e^∫(-2x)dx = e^(-x²), y = (1/μ)∫μx dx",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Verifica si y = xe^(x²) satisface dy/dx + 2xy = 2x",
+      "solucion": "Esta solución es incorrecta porque el factor integrante debería ser e^∫2x dx = e^(x²), no e^(-x²)",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Sustitución directa en la ecuación diferencial",
+    "sugerido": "Para cualquier solución propuesta y(x), verificar que dy/dx + P(x)y = Q(x)",
+    "criterio": "La ecuación original debe satisfacerse algebraicamente después de derivar y sustituir"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-02",
+    "actualizado": "2024-01-02",
+    "tags": [
+      "ecuaciones diferenciales",
+      "primer orden",
+      "lineal",
+      "factor integrante",
+      "signo",
+      "error común"
+    ]
+  }
+}

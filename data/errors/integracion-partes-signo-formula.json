@@ -1,0 +1,77 @@
+{
+  "id": "integracion-partes-signo-formula",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Integración por partes",
+  "titulo": "Signo incorrecto en la aplicación de la fórmula de integración por partes",
+  "descripcion_corta": "Al aplicar la fórmula de integración por partes, se escribe incorrectamente el signo en el término ∫v du, usando + en lugar de -.",
+  "prerrequisitos": [
+    "Fórmula de integración por partes: ∫u dv = uv - ∫v du",
+    "Entendimiento de la derivada del producto: d/dx[uv] = u'v + uv'",
+    "Proceso de resolución de la ecuación diferencial d(uv) = u dv + v du"
+  ],
+  "sintomas": [
+    "La solución obtenida no satisface la verificación por derivación",
+    "La constante de integración parece 'compensar' el error pero no es consistente",
+    "Al derivar la respuesta, no se obtiene el integrando original",
+    "La solución parece 'casi correcta' pero falla en la verificación"
+  ],
+  "patron_error": {
+    "latex": "\\int u \\, dv = uv + \\int v \\, du",
+    "explicacion": "Se escribe incorrectamente la fórmula como uv + ∫v du, cuando debería ser uv - ∫v du. Este error viene de confundir la fórmula de integración por partes con la regla del producto para derivadas."
+  },
+  "deteccion": {
+    "tipo": "Verificación por derivación",
+    "reglas": [
+      "Derivar la solución obtenida y comparar con el integrando original",
+      "Verificar que d/dx[F(x)] = f(x)",
+      "Revisar el signo en la aplicación de la fórmula",
+      "Comprobar si la constante de integración 'compensa' otros errores"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Recordar que la integración por partes viene de resolver la ecuación diferencial d(uv) = u dv + v du, donde el término v du tiene signo negativo",
+    "pistas": [
+      "La fórmula correcta es: ∫u dv = uv - ∫v du",
+      "Recuerda: es MENOS, no más",
+      "Si la verificación falla, revisa el signo del término integral",
+      "El error de signo es equivalente a integrar -f(x) en lugar de f(x)"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Derivada del producto: } \\frac{d}{dx}(uv) = u'v + uv'\\\\ \\text{Despejando: } u \\, dv = d(uv) - v \\, du\\\\ \\text{Integrando: } \\int u \\, dv = uv - \\int v \\, du",
+      "nota": "El signo negativo viene de mover el término v du al otro lado de la ecuación. Este es el origen matemático del signo en la fórmula de integración por partes."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Calcula ∫x e^x dx y verifica que d/dx[F(x)] = x e^x",
+      "solucion": "Solución correcta: F(x) = e^x (x - 1) + C. Derivada: d/dx[e^x (x - 1) + C] = e^x + e^x (x - 1) = e^x (1 + x - 1) = x e^x ✓",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Si se aplicara erróneamente ∫x e^x dx = x e^x + ∫e^x dx, ¿cuál sería la 'solución' y por qué falla?",
+      "solucion": "Solución errónea: x e^x + e^x + C = e^x (x + 1) + C. Derivada: e^x + e^x (x + 1) = e^x (1 + x + 1) = e^x (x + 2), que no es igual a x e^x.",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Derivación y comparación",
+    "sugerido": "Deriva tu solución F(x) y verifica que F'(x) = f(x), donde f(x) es el integrando original",
+    "criterio": "La derivada de la antiderivada debe ser igual al integrando original"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integración por partes",
+      "signo de la fórmula",
+      "error algebraico",
+      "verificación",
+      "semana 1",
+      "error común",
+      "derivada del producto"
+    ]
+  }
+}
