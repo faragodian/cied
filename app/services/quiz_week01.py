@@ -2063,7 +2063,7 @@ QUIZ_TEMPLATES = [
                     }
                 ],
                 "error_highlight": "Error: confusión entre diferentes formas trigonométricas",
-                "error_id": "sustitucion-trigonometrica-incorrecta"
+                "error_id": "sustitucion-trigonometrica-incorrecta",
             }
         ]
     },
