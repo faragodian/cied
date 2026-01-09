@@ -19,8 +19,8 @@
                 <p>Universidad de los Andes • Bogotá, Colombia</p>
             </div>
             <p class="description">
-                Sistema educativo basado en agentes de IA para apoyar el aprendizaje de cálculo integral
-                con ecuaciones diferenciales. Detectamos, explicamos y corregimos errores frecuentes
+                Sistema educativo basado en agentes de IA para apoyar el aprendizaje de Cálculo Integral
+                con Ecuaciones Diferenciales (CIED). Detectamos, explicamos y corregimos errores frecuentes
                 mediante un banco estructurado de errores y retroalimentación inteligente.
             </p>
         </div>
@@ -124,7 +124,10 @@
             <div class="card">
                 <h2>⚡ Acciones Rápidas</h2>
                 <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
-                    <a href="{{ url_for('core.syllabus') }}" class="btn">
+                    <a href="{{ url_for('quiz.quiz_week01_get') }}" class="btn">
+                        ❓ Quiz Semana 1
+                    </a>
+                    <a href="{{ url_for('core.syllabus') }}" class="btn btn-secondary">
                         📅 Ver Syllabus
                     </a>
                     <a href="{{ url_for('errors.list_errors') }}" class="btn btn-secondary">

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Semana 1 - CIED</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <script>
+        // Script simple para renderizar LaTeX con MathJax
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Quiz: Semana 1</h1>
+            <p class="subtitle">Integración por partes</p>
+            <p class="description">
+                Resuelve la integral mostrada seleccionando la opción correcta.
+                Si aciertas, verás el procedimiento completo. Si te equivocas, verás dónde está el error y cómo resolverlo correctamente.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Question -->
+            <div class="card">
+                <h2>📐 Pregunta</h2>
+                <div style="text-align: center; font-size: 1.5rem; margin: var(--spacing-lg) 0;">
+                    ${{ question.question_latex }} = ?$
+                </div>
+
+                {% if not result %}
+                <!-- Form -->
+                <form method="POST" action="{{ url_for('quiz.quiz_week01_post') }}">
+                    <div style="margin: var(--spacing-lg) 0;">
+                        {% for option in question.options %}
+                        <div style="margin: var(--spacing-sm) 0;">
+                            <label style="display: flex; align-items: center; gap: var(--spacing-sm); cursor: pointer;">
+                                <input type="radio" name="answer" value="{{ option.option_id }}" required>
+                                <span style="font-family: var(--font-mono); background: var(--bg-tertiary); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius);">
+                                    ${{ option.latex }}$
+                                </span>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div style="text-align: center; margin-top: var(--spacing-xl);">
+                        <button type="submit" class="btn">Enviar Respuesta</button>
+                    </div>
+                </form>
+                {% else %}
+                <!-- Result -->
+                <div style="margin: var(--spacing-lg) 0;">
+                    {% if result.is_correct %}
+                        <div style="text-align: center; color: var(--success-color); font-size: 1.25rem; font-weight: 600; margin-bottom: var(--spacing-md);">
+                            ✅ ¡Correcto!
+                        </div>
+                        <p style="text-align: center; margin-bottom: var(--spacing-lg);">Excelente trabajo. Has resuelto correctamente la integral usando integración por partes.</p>
+
+                        <!-- Procedimiento correcto -->
+                        <div style="background: var(--bg-tertiary); padding: var(--spacing-lg); border-radius: var(--border-radius); margin-bottom: var(--spacing-lg);">
+                            <h3 style="color: var(--text-primary); margin-bottom: var(--spacing-md); text-align: center;">
+                                📝 Procedimiento correcto
+                            </h3>
+                            <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                                {% for step in result.solution_steps %}
+                                <div style="background: var(--bg-color); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--border-radius); border-left: 3px solid var(--success-color);">
+                                    {% if step.text %}
+                                    <div style="margin-bottom: var(--spacing-xs); font-weight: 500; color: var(--text-primary);">
+                                        {{ step.text }}
+                                    </div>
+                                    {% endif %}
+                                    {% if step.math %}
+                                    <div style="font-family: var(--font-mono); background: var(--bg-tertiary); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius); display: inline-block;">
+                                        ${{ step.math }}$
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div style="text-align: center; margin-top: var(--spacing-md); font-weight: 600; color: var(--text-primary);">
+                                Respuesta final: ${{ result.final_answer }}$
+                            </div>
+                        </div>
+                    {% else %}
+                        <div style="text-align: center; color: var(--error-color); font-size: 1.25rem; font-weight: 600; margin-bottom: var(--spacing-md);">
+                            ❌ Respuesta incorrecta
+                        </div>
+
+                        <!-- Lo que hiciste mal -->
+                        {% if result.wrong_steps %}
+                        <div style="background: #fee2e2; padding: var(--spacing-lg); border-radius: var(--border-radius); margin-bottom: var(--spacing-lg); border: 1px solid #fecaca;">
+                            <h3 style="color: var(--error-color); margin-bottom: var(--spacing-md); text-align: center;">
+                                ❌ Tu intento (con error resaltado)
+                            </h3>
+                            <div style="display: flex; flex-direction: column; gap: var(--spacing-md); margin-bottom: var(--spacing-md);">
+                                {% for step in result.wrong_steps %}
+                                <div style="background: var(--bg-color); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--border-radius); {% if 'Error:' in step.text %}border-left: 3px solid var(--error-color); background: #fef2f2;{% else %}border-left: 3px solid #e5e7eb;{% endif %}">
+                                    {% if step.text %}
+                                    <div style="margin-bottom: var(--spacing-xs); font-weight: 500; color: var(--text-primary);">
+                                        {{ step.text }}
+                                    </div>
+                                    {% endif %}
+                                    {% if step.math %}
+                                    <div style="font-family: var(--font-mono); background: var(--bg-tertiary); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius); display: inline-block;">
+                                        ${{ step.math }}$
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% if result.error_highlight %}
+                            <div style="background: #dc2626; color: white; padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--border-radius); text-align: center; font-weight: 600;">
+                                {{ result.error_highlight }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        <!-- Cómo se hace correctamente -->
+                        <div style="background: var(--bg-tertiary); padding: var(--spacing-lg); border-radius: var(--border-radius); margin-bottom: var(--spacing-lg);">
+                            <h3 style="color: var(--text-primary); margin-bottom: var(--spacing-md); text-align: center;">
+                                ✅ Cómo se resuelve correctamente
+                            </h3>
+                            <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                                {% for step in result.solution_steps %}
+                                <div style="background: var(--bg-color); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--border-radius); border-left: 3px solid var(--success-color);">
+                                    {% if step.text %}
+                                    <div style="margin-bottom: var(--spacing-xs); font-weight: 500; color: var(--text-primary);">
+                                        {{ step.text }}
+                                    </div>
+                                    {% endif %}
+                                    {% if step.math %}
+                                    <div style="font-family: var(--font-mono); background: var(--bg-tertiary); padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius); display: inline-block;">
+                                        ${{ step.math }}$
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div style="text-align: center; margin-top: var(--spacing-md); font-weight: 600; color: var(--text-primary);">
+                                Respuesta final: ${{ question.correct_answer }}$
+                            </div>
+                        </div>
+
+                        {% if error_info %}
+                        <div style="background: var(--bg-tertiary); padding: var(--spacing-md); border-radius: var(--border-radius); margin-bottom: var(--spacing-md); text-align: left;">
+                            <h3 style="color: var(--text-primary); margin-bottom: var(--spacing-sm);">
+                                📚 Información del error
+                            </h3>
+                            <p style="color: var(--text-secondary); margin-bottom: var(--spacing-md);">
+                                <strong>{{ error_info.titulo }}</strong><br>
+                                {{ error_info.descripcion_corta }}
+                            </p>
+                            <a href="{{ url_for('errors.get_error', error_id=error_info.id) }}" class="btn btn-secondary" style="font-size: 0.875rem;">
+                                Ver explicación completa
+                            </a>
+                        </div>
+                        {% endif %}
+
+                        <div style="text-align: center; margin: var(--spacing-md) 0;">
+                            <p><strong>Tu respuesta:</strong> ${{ result.selected_answer or 'No disponible' }}$</p>
+                            <p><strong>Respuesta correcta:</strong> ${{ question.correct_answer }}$</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div style="text-align: center; margin-top: var(--spacing-xl);">
+                    <a href="{{ url_for('quiz.quiz_week01_get') }}" class="btn">
+                        🔄 Nueva Pregunta
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Navigation -->
+            <div class="card">
+                <h2>🧭 Navegación</h2>
+                <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
+                    <a href="{{ url_for('core.index') }}" class="btn">
+                        🏠 Volver al Inicio
+                    </a>
+                    <a href="{{ url_for('errors.list_errors') }}" class="btn btn-secondary">
+                        📝 Ver Banco de Errores
+                    </a>
+                    <a href="{{ url_for('core.syllabus') }}" class="btn btn-secondary">
+                        📅 Ver Syllabus
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>
+                🧮 CIED — Sistema educativo para el aprendizaje de cálculo integral con ecuaciones diferenciales<br>
+                Desarrollado con ❤️ para estudiantes de ingeniería • Universidad de los Andes
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

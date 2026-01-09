@@ -1,0 +1,77 @@
+{
+  "id": "integral-definida-limites-invertidos",
+  "curso": "MATE-1214",
+  "tema": "Integrales definidas",
+  "subtema": "Teorema Fundamental del Cálculo",
+  "titulo": "Evaluación incorrecta de límites en integrales definidas",
+  "descripcion_corta": "Al evaluar integrales definidas, se calcula F(a) − F(b) en lugar de F(b) − F(a), invirtiendo el signo del resultado.",
+  "prerrequisitos": [
+    "Teorema Fundamental del Cálculo: ∫_a^b f(x) dx = F(b) − F(a)",
+    "Entendimiento de que el límite superior menos el límite inferior",
+    "Cálculo correcto de antiderivadas"
+  ],
+  "sintomas": [
+    "El resultado tiene el signo incorrecto",
+    "La respuesta es el negativo de la correcta",
+    "Los cálculos algebraicos parecen correctos pero el resultado final es erróneo",
+    "La integral evaluada da un valor que no tiene sentido físico o geométrico"
+  ],
+  "patron_error": {
+    "latex": "\\int_{1}^{3} x^{2} \\, dx = F(1) - F(3) = \\frac{1}{3} - \\frac{27}{3} = -\\frac{26}{3}",
+    "explicacion": "Se evalúa la antiderivada en el límite inferior menos el límite superior, en lugar de límite superior menos límite inferior, resultando en el signo incorrecto."
+  },
+  "deteccion": {
+    "tipo": "Verificación de signo y sentido geométrico",
+    "reglas": [
+      "Verificar que el resultado tenga sentido físico (áreas no negativas cuando corresponde)",
+      "Comparar con evaluaciones numéricas aproximadas",
+      "Revisar que se aplique F(b) − F(a) y no F(a) − F(b)",
+      "Contar que el límite superior se reste del límite inferior"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Recordar que la integral definida representa un proceso de 'acumulación desde a hasta b', por lo que F(b) − F(a) es la diferencia correcta",
+    "pistas": [
+      "El límite superior siempre se resta del límite inferior",
+      "Si obtienes un resultado negativo cuando esperabas positivo, revisa el orden",
+      "Recuerda: ∫_a^b = [antiderivada]_a^b = F(b) − F(a)",
+      "Piensa geométricamente: área desde a hasta b"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Teorema Fundamental del Cálculo II:}\\\\ \\int_{a}^{b} f(x) \\, dx = F(b) - F(a)\\\\ \\text{Ejemplo: } \\int_{1}^{3} x^{2} \\, dx = \\left[\\frac{x^{3}}{3}\\right]_{1}^{3} = \\frac{27}{3} - \\frac{1}{3} = \\frac{26}{3}\\\\ \\text{No } \\frac{1}{3} - \\frac{27}{3} = -\\frac{26}{3}",
+      "nota": "El orden importa: F(límite superior) − F(límite inferior). Si inviertes el orden, obtienes el negativo de la integral. Esto es equivalente a cambiar los límites de integración."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Evalúa ∫_{-1}^{2} x³ dx correctamente",
+      "solucion": "Antiderivada: ∫x³ dx = (1/4)x⁴ + C. Evaluación: [(1/4)(2)⁴] - [(1/4)(-1)⁴] = (1/4)(16) - (1/4)(1) = 4 - 0.25 = 3.75",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "¿Por qué ∫_{0}^{π} sen x dx = [-cos x]_{0}^{π} = -cos(π) - (-cos(0)) = -(-1) - (-1) = 1 + 1 = 2?",
+      "solucion": "F(b) − F(a) = F(π) − F(0) = -cos(π) − (-cos(0)) = -(-1) − (-1) = 1 + 1 = 2. Si se evaluara al revés: F(0) − F(π) = -1 − (-(-1)) = -1 - 1 = -2 (incorrecto).",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Evaluación geométrica o numérica",
+    "sugerido": "Si la integral representa un área, el resultado debe ser positivo. Si representa un trabajo o flujo, verificar el sentido físico.",
+    "criterio": "El resultado debe ser consistente con el significado geométrico o físico de la integral"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integrales definidas",
+      "teorema fundamental del cálculo",
+      "evaluación de límites",
+      "orden de límites",
+      "error de signo",
+      "semana 1",
+      "procedimental"
+    ]
+  }
+}

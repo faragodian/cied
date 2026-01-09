@@ -28,9 +28,11 @@ def create_app(config_class=Config):
     # Registrar blueprints
     from .blueprints.core import core_bp
     from .blueprints.errors import errors_bp
+    from .blueprints.quiz import quiz_bp
 
     app.register_blueprint(core_bp)
     app.register_blueprint(errors_bp, url_prefix="/errors")
+    app.register_blueprint(quiz_bp)
 
     # Configurar ruta estática para docs
     docs_dir = app.config['DOCS_DIR']
