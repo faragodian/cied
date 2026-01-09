@@ -1,0 +1,87 @@
+{
+  "id": "integral-impropia-planteo-limite-incorrecto",
+  "curso": "MATE-1214",
+  "tema": "Integrales impropias",
+  "subtema": "Formulación de límites",
+  "titulo": "Formulación incorrecta del límite en integrales impropias",
+  "descripcion_corta": "Al convertir una integral impropia en un límite, se formula incorrectamente el límite (lado equivocado, variable mal elegida, o expresión incorrecta del límite).",
+  "prerrequisitos": [
+    "Concepto de límite en integrales impropias",
+    "Diferencia entre límites laterales (izquierdo/derecho)",
+    "Elección apropiada de variable en el límite"
+  ],
+  "sintomas": [
+    "Se usa lim_{x→a⁻} cuando debería ser lim_{x→a⁺}",
+    "Se formula el límite de manera que no captura el comportamiento correcto",
+    "Se obtiene un resultado incorrecto debido al planteamiento erróneo",
+    "Confusión entre el límite de la integral y el límite de la función"
+  ],
+  "patron_error": {
+    "latex": "\\int_{0}^{1} \\frac{1}{\\sqrt{x}} \\, dx = \\lim_{x \\to 0^{-}} \\int_{x}^{1} \\frac{1}{\\sqrt{t}} \\, dt",
+    "explicacion": "Se usa el límite por la izquierda (x→0⁻) en lugar del límite por la derecha (x→0⁺), lo cual no corresponde al intervalo de integración [0,1]."
+  },
+  "deteccion": {
+    "tipo": "Verificación de correspondencia entre intervalo de integración y dirección del límite",
+    "reglas": [
+      "Para límite inferior a: si a es finito, usar lim_{x→a⁺}",
+      "Para límite superior b: si b es finito, usar lim_{x→b⁻}",
+      "Para límites infinitos: usar la dirección apropiada (→∞ o →-∞)",
+      "Verificar que la variable del límite corresponda al punto impropio"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Identificar correctamente el punto impropio y usar el límite lateral apropiado que corresponda al intervalo de integración",
+    "pistas": [
+      "Si el intervalo es [a,b] con a finito: lim_{x→a⁺}",
+      "Si el intervalo es [a,b] con b finito: lim_{x→b⁻}",
+      "Si el intervalo es [a,∞): lim_{x→∞}",
+      "Si el intervalo es (-∞,b]: lim_{x→-∞}",
+      "Para singularidades: usar el lado que preserve el intervalo original"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Límite lateral correcto para integrales impropias:} \\\\ \\int_{0}^{1} \\frac{1}{\\sqrt{x}} \\, dx = \\lim_{a \\to 0^{+}} \\int_{a}^{1} \\frac{1}{\\sqrt{x}} \\, dx \\\\ \\int_{1}^{\\infty} \\frac{1}{x^{2}} \\, dx = \\lim_{b \\to \\infty} \\int_{1}^{b} \\frac{1}{x^{2}} \\, dx \\\\ \\int_{-\\infty}^{0} e^{x} \\, dx = \\lim_{c \\to -\\infty} \\int_{c}^{0} e^{x} \\, dx",
+      "nota": "La dirección del límite debe corresponder al 'sentido' de aproximación al punto impropio dentro del intervalo de integración original."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Formula correctamente el límite para ∫₀² dx/√x",
+      "solucion": "Es impropia en x=0. ∫₀² dx/√x = lim_{a→0⁺} ∫_a² x^{-1/2} dx = lim_{a→0⁺} [2x^{1/2}]_a² = lim_{a→0⁺} (2√2 - 2√a) = 2√2 - 0 = 2√2",
+      "dificultad": "media"
+    },
+    {
+      "enunciado": "Formula correctamente ∫₁^∞ dx/x",
+      "solucion": "Es impropia en ∞. ∫₁^∞ dx/x = lim_{b→∞} ∫₁^b x^{-1} dx = lim_{b→∞} [ln x]_1^b = lim_{b→∞} (ln b - ln 1) = lim_{b→∞} ln b = ∞. Diverge.",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "¿Cuál es el error en: ∫₀¹ dx/√x = lim_{x→0⁻} ∫_x¹ dt/√t?",
+      "solucion": "Error: usa límite por izquierda (x→0⁻) pero el intervalo [0,1] requiere límite por derecha (x→0⁺). La formulación correcta es lim_{a→0⁺} ∫_a¹ dt/√t.",
+      "dificultad": "media"
+    },
+    {
+      "enunciado": "Evalúa ∫_{-∞}^0 e^x dx correctamente",
+      "solucion": "Es impropia en -∞. ∫_{-∞}^0 e^x dx = lim_{c→-∞} ∫_c^0 e^x dx = lim_{c→-∞} [e^x]_c^0 = lim_{c→-∞} (e^0 - e^c) = lim_{c→-∞} (1 - e^c) = 1 - 0 = 1",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Verificación geométrica y comparación de direcciones",
+    "sugerido": "Dibujar el intervalo de integración y verificar que el límite se aproxima desde dentro del intervalo, no desde fuera.",
+    "criterio": "La dirección del límite debe preservar la orientación del intervalo original"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2025-01-08",
+    "actualizado": "2025-01-08",
+    "tags": [
+      "integrales impropias",
+      "límites laterales",
+      "formulación de límites",
+      "dirección de aproximación",
+      "semana 1",
+      "procedimental"
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "id": "integral-impropia-ignora-impropiedad",
+  "curso": "MATE-1214",
+  "tema": "Integrales impropias",
+  "subtema": "Definición y evaluación",
+  "titulo": "Evaluar integral impropia como si fuera definida ordinaria",
+  "descripcion_corta": "Al calcular una integral impropia, se ignora el carácter impropio y se evalúa directamente la antiderivada en los límites, sin considerar el comportamiento en puntos singulares o límites infinitos.",
+  "prerrequisitos": [
+    "Concepto de integral impropia: ∫_a^∞ f(x) dx = lim_{b→∞} ∫_a^b f(x) dx",
+    "Puntos singulares donde la función no está definida o tiende a infinito",
+    "Teorema Fundamental del Cálculo no aplica directamente en puntos impropios"
+  ],
+  "sintomas": [
+    "Se obtiene un resultado finito cuando debería divergir",
+    "Aparecen expresiones indefinidas como ∞ - ∞, ln(0), etc.",
+    "Se ignora que la función no está acotada en algún punto del intervalo",
+    "El cálculo parece algebraicamente correcto pero no considera la impropiedad"
+  ],
+  "patron_error": {
+    "latex": "\\int_{0}^{1} \\frac{1}{\\sqrt{x}} \\, dx = \\left[ 2\\sqrt{x} \\right]_{0}^{1} = 2\\sqrt{1} - 2\\sqrt{0} = 2 - 0 = 2",
+    "explicacion": "Se evalúa directamente la antiderivada sin considerar que √x no está definida en x=0, ignorando que es un punto impropio que requiere análisis de límite."
+  },
+  "deteccion": {
+    "tipo": "Análisis de puntos críticos en el intervalo de integración",
+    "reglas": [
+      "Identificar si alguno de los límites es ∞ o -∞",
+      "Verificar si la función tiene singularidades en el intervalo [a,b]",
+      "Comprobar si la antiderivada existe en todos los puntos del intervalo",
+      "Evaluar si el resultado obtenido tiene sentido físico/matemático"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Definir la integral impropia como límite apropiado y evaluar cuidadosamente el comportamiento en puntos críticos",
+    "pistas": [
+      "Si hay un límite infinito: ∫_a^∞ f(x) dx = lim_{b→∞} ∫_a^b f(x) dx",
+      "Si hay una singularidad en c ∈ [a,b]: ∫_a^b f(x) dx = lim_{ε→0} ∫_a^{c-ε} f(x) dx + lim_{δ→0} ∫_{c+δ}^b f(x) dx",
+      "Verificar que ambos límites existen y son finitos para convergencia",
+      "Si algún límite diverge, la integral diverge"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Integral impropia tipo I (límite infinito):} \\\\ \\int_{1}^{\\infty} \\frac{1}{x^{2}} \\, dx = \\lim_{b \\to \\infty} \\int_{1}^{b} x^{-2} \\, dx = \\lim_{b \\to \\infty} \\left[ -\\frac{1}{x} \\right]_{1}^{b} = \\lim_{b \\to \\infty} \\left( -\\frac{1}{b} + 1 \\right) = 1 \\\\ \\text{Integral impropia tipo II (singularidad):} \\\\ \\int_{0}^{1} \\frac{1}{\\sqrt{x}} \\, dx = \\lim_{a \\to 0^{+}} \\int_{a}^{1} x^{-1/2} \\, dx = \\lim_{a \\to 0^{+}} \\left[ 2\\sqrt{x} \\right]_{a}^{1} = \\lim_{a \\to 0^{+}} (2 - 2\\sqrt{a}) = 2",
+      "nota": "Las integrales impropias requieren análisis de límites. Si el límite existe y es finito, converge; si diverge a ±∞, la integral diverge."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Evalúa correctamente ∫₀¹ x^{-1/2} dx como integral impropia",
+      "solucion": "Es impropia en x=0. ∫₀¹ x^{-1/2} dx = lim_{a→0⁺} ∫_a¹ x^{-1/2} dx = lim_{a→0⁺} [2x^{1/2}]_a¹ = lim_{a→0⁺} (2 - 2a^{1/2}) = 2 - 0 = 2. Converge.",
+      "dificultad": "media"
+    },
+    {
+      "enunciado": "¿Por qué ∫₁² dx/(x-1) es impropia? Evalúala correctamente.",
+      "solucion": "Es impropia en x=1 (singularidad). ∫₁² dx/(x-1) = lim_{a→1⁺} ∫_a² dx/(x-1) = lim_{a→1⁺} [ln|x-1|]_a² = lim_{a→1⁺} (ln1 - ln(a-1)) = lim_{a→1⁺} (0 - ln(a-1)). Como a→1⁺, ln(a-1)→-∞, así que 0 - (-∞) = +∞. Diverge.",
+      "dificultad": "media"
+    },
+    {
+      "enunciado": "Evalúa ∫₁^∞ dx/x². ¿Converge o diverge?",
+      "solucion": "Es impropia en ∞. ∫₁^∞ dx/x² = lim_{b→∞} ∫₁^b x^{-2} dx = lim_{b→∞} [-1/x]_1^b = lim_{b→∞} (-1/b + 1) = 0 + 1 = 1. Converge al valor 1.",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Evalúa ∫₁^∞ dx/x. ¿Converge o diverge?",
+      "solucion": "Es impropia en ∞. ∫₁^∞ dx/x = lim_{b→∞} ∫₁^b x^{-1} dx = lim_{b→∞} [ln x]_1^b = lim_{b→∞} (ln b - ln 1) = lim_{b→∞} ln b = ∞. Diverge.",
+      "dificultad": "baja"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Análisis de límites y comparación con funciones conocidas",
+    "sugerido": "Para límites infinitos: comparar con integrales p (∫ dx/x^p converge si p>1, diverge si p≤1). Para singularidades: analizar comportamiento local de la función.",
+    "criterio": "La integral converge si y solo si el límite existe y es finito"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2025-01-08",
+    "actualizado": "2025-01-08",
+    "tags": [
+      "integrales impropias",
+      "límites infinitos",
+      "puntos singulares",
+      "convergencia",
+      "divergencia",
+      "semana 1",
+      "conceptual"
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "id": "integral-impropia-algebra-log-mal",
+  "curso": "MATE-1214",
+  "tema": "Integrales impropias",
+  "subtema": "Cálculo algebraico en límites",
+  "titulo": "Errores algebraicos al evaluar antiderivadas en límites impropios",
+  "descripcion_corta": "Al calcular integrales impropias, se cometen errores algebraicos al evaluar antiderivadas en los límites, especialmente con logaritmos, potencias, o expresiones que involucran el parámetro del límite.",
+  "prerrequisitos": [
+    "Cálculo de antiderivadas básicas (potencias, logaritmos, trigonométricas)",
+    "Evaluación de funciones en límites",
+    "Propiedades algebraicas de límites"
+  ],
+  "sintomas": [
+    "Errores al evaluar logaritmos en 0 o ∞",
+    "Confusión con propiedades de límites (lim ln x = ∞ cuando x→∞)",
+    "Errores en evaluación de potencias cuando el exponente involucra el límite",
+    "Olvido de que ciertas expresiones no están definidas en puntos críticos"
+  ],
+  "patron_error": {
+    "latex": "\\int_{1}^{\\infty} \\frac{1}{x} \\, dx = \\lim_{b \\to \\infty} [\\ln x]_{1}^{b} = \\lim_{b \\to \\infty} (\\ln b - \\ln 1) = \\lim_{b \\to \\infty} \\ln b = 0",
+    "explicacion": "Error: se concluye incorrectamente que lim_{b→∞} ln b = 0, cuando en realidad lim_{b→∞} ln b = ∞."
+  },
+  "deteccion": {
+    "tipo": "Verificación de propiedades conocidas de funciones en límites",
+    "reglas": [
+      "Verificar que lim_{x→∞} ln x = ∞",
+      "Recordar que lim_{x→0⁺} ln x = -∞",
+      "Comprobar evaluación correcta de potencias",
+      "Validar que no se violen propiedades algebraicas básicas"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Aplicar correctamente las propiedades de límites de funciones elementales y evaluar cuidadosamente las expresiones algebraicas",
+    "pistas": [
+      "lim_{x→∞} ln x = ∞ (crece sin cota)",
+      "lim_{x→0⁺} ln x = -∞",
+      "lim_{x→∞} x^k = ∞ si k > 0, 0 si k < 0",
+      "lim_{x→0⁺} x^k = 0 si k > 0, ∞ si k < 0",
+      "Evaluar paso a paso y verificar cada propiedad"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Propiedades de límites importantes:} \\\\ \\lim_{x \\to \\infty} \\ln x = \\infty, \\quad \\lim_{x \\to 0^{+}} \\ln x = -\\infty \\\\ \\lim_{x \\to \\infty} x^{k} = \\begin{cases} \\infty & \\text{si } k > 0 \\\\ 1 & \\text{si } k = 0 \\\\ 0 & \\text{si } k < 0 \\end{cases} \\\\ \\lim_{x \\to 0^{+}} x^{k} = \\begin{cases} 0 & \\text{si } k > 0 \\\\ 1 & \\text{si } k = 0 \\\\ \\infty & \\text{si } k < 0 \\end{cases} \\\\ \\text{Ejemplo:} \\int_{1}^{\\infty} \\frac{1}{x} \\, dx = \\lim_{b \\to \\infty} [\\ln x]_{1}^{b} = \\lim_{b \\to \\infty} (\\ln b - 0) = \\infty",
+      "nota": "Los errores más comunes ocurren al olvidar que ln x → ∞ cuando x → ∞, o que x^k → ∞ cuando x → 0⁺ y k < 0."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Evalúa correctamente ∫₁^∞ dx/x",
+      "solucion": "∫₁^∞ dx/x = lim_{b→∞} ∫₁^b x^{-1} dx = lim_{b→∞} [ln x]_1^b = lim_{b→∞} (ln b - ln 1) = lim_{b→∞} ln b = ∞. Diverge.",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Evalúa ∫₁^∞ dx/x²",
+      "solucion": "∫₁^∞ dx/x² = lim_{b→∞} ∫₁^b x^{-2} dx = lim_{b→∞} [-1/x]_1^b = lim_{b→∞} (-1/b + 1) = 0 + 1 = 1. Converge a 1.",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "¿Cuál es el error en: lim_{b→∞} ln b = 0?",
+      "solucion": "Error: lim_{b→∞} ln b = ∞, no 0. El logaritmo crece sin cota superior cuando el argumento tiende a infinito.",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Evalúa ∫₀¹ x^{-1/2} dx",
+      "solucion": "∫₀¹ x^{-1/2} dx = lim_{a→0⁺} ∫_a¹ x^{-1/2} dx = lim_{a→0⁺} [2x^{1/2}]_a¹ = lim_{a→0⁺} (2 - 2a^{1/2}) = 2 - 0 = 2. Converge.",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Verificación por derivación y comparación con resultados conocidos",
+    "sugerido": "Derivar la antiderivada obtenida para verificar que recupera la función original. Comparar con casos similares conocidos.",
+    "criterio": "La evaluación algebraica debe ser consistente con las propiedades conocidas de límites"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2025-01-08",
+    "actualizado": "2025-01-08",
+    "tags": [
+      "integrales impropias",
+      "álgebra de límites",
+      "propiedades de límites",
+      "logaritmos",
+      "potencias",
+      "semana 1",
+      "procedimental"
+    ]
+  }
+}
