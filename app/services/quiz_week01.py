@@ -4,8 +4,10 @@ Contiene plantillas de preguntas con opciones correctas e incorrectas
 """
 
 import random
+from pathlib import Path
 from typing import Dict, List, Any
 from .weeks import get_quiz_templates_for_week, WeekSpec, register_week
+from .llm_generator import generate_week01_exercise
 
 
 # Plantillas de preguntas para el quiz de Semana 1
@@ -367,7 +369,7 @@ QUIZ_TEMPLATES = [
                         "math": r"\int_{0}^{\pi} x \sin(x) \, dx = F(0) - F(\pi)"
                     },
                     {
-                        "text": "Donde F(x) = -x \cos(x):",
+                        "text": "Donde F(x) = -x \\cos(x):",
                         "math": r"F(0) - F(\pi) = -0 \cdot 1 - (-\pi \cdot (-1)) = 0 - \pi = -\pi"
                     }
                 ],
@@ -2170,7 +2172,7 @@ QUIZ_TEMPLATES = [
                 "error_id": "sustitucion-trigonometrica-incorrecta"
             }
         ]
-    }
+    },
     # Integrales definidas impropias - Caso convergente simple
     {
         "question_latex": r"\int_{0}^{1} x^{-1/2} \, dx",
@@ -2364,13 +2366,102 @@ QUIZ_TEMPLATES = [
 ]
 
 
-def get_random_question() -> Dict[str, Any]:
+def generate_dynamic_question(base_question_latex: str) -> Dict[str, Any]:
+    """
+    Genera un ejercicio dinámico basado en un ejercicio semilla usando LLM.
+
+    Args:
+        base_question_latex: LaTeX del ejercicio base
+
+    Returns:
+        Dict con la estructura completa del quiz instance generado dinámicamente
+    """
+    # Generar nuevo enunciado usando LLM
+    new_question_latex = generate_week01_exercise(base_question_latex)
+
+    # Usar un template base como estructura (tomamos el primero)
+    quiz_templates = get_quiz_templates_for_week("week01")
+    template = quiz_templates[0].copy()  # Usar estructura base
+
+    # Reemplazar el enunciado con el generado dinámicamente
+    template["question_latex"] = new_question_latex
+
+    # Construir opciones con identificadores únicos (mantenemos la estructura)
+    options = []
+
+    # Opción correcta (usamos la estructura pero adaptamos)
+    correct_option = {
+        "option_id": "correct",
+        "latex": template["choices_latex"][template["correct_index"]],
+        "is_correct": True,
+        "solution_steps": template.get("solution_steps", []),
+        "final_answer": template.get("correct_answer", "")
+    }
+    options.append(correct_option)
+
+    # Opciones incorrectas
+    for i, (choice_latex, wrong_option) in enumerate(zip(
+        [c for j, c in enumerate(template["choices_latex"]) if j != template["correct_index"]],
+        template.get("wrong_options", [])
+    )):
+        incorrect_option = {
+            "option_id": f"incorrect_{i}",
+            "latex": choice_latex,
+            "is_correct": False,
+            "error_id": wrong_option.get("error_id", ""),
+            "wrong_steps": wrong_option.get("wrong_steps", []),
+            "error_highlight": wrong_option.get("error_highlight", "")
+        }
+        options.append(incorrect_option)
+
+    # Mezclar opciones
+    random.shuffle(options)
+
+    # Crear instancia del quiz
+    quiz_instance = {
+        "question_latex": new_question_latex,
+        "options": options,
+        "solution_steps": template.get("solution_steps", []),
+        "correct_answer": template.get("correct_answer", ""),
+        "week_id": "week01",
+        "is_dynamic": True,  # Marca que es generado dinámicamente
+        "agent_trace": {
+            "source": "llm",
+            "model": "gemini-pro-latest"
+        }
+    }
+
+    return quiz_instance
+
+
+def get_another_question(current_question_latex: str) -> Dict[str, Any]:
+    """
+    Genera otro ejercicio dinámico basado en el ejercicio actual.
+
+    Args:
+        current_question_latex: LaTeX del ejercicio actual
+
+    Returns:
+        Dict con nuevo ejercicio generado dinámicamente
+    """
+    return generate_dynamic_question(current_question_latex)
+
+
+def get_random_question(use_dynamic: bool = False, base_question: str = None) -> Dict[str, Any]:
     """
     Retorna una instancia aleatoria del quiz de Semana 1 con opciones mezcladas
+
+    Args:
+        use_dynamic: Si True, genera un ejercicio dinámico usando LLM
+        base_question: Enunciado base para generar ejercicio dinámico (requerido si use_dynamic=True)
 
     Returns:
         Dict con la estructura completa del quiz instance
     """
+    # Si se solicita ejercicio dinámico, usar LLM generator
+    if use_dynamic and base_question:
+        return generate_dynamic_question(base_question)
+
     # Obtener templates desde WeekSpec (mantiene backward compatibility)
     quiz_templates = get_quiz_templates_for_week("week01")
 

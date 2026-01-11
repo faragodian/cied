@@ -1,0 +1,31 @@
+[Unit]
+Description=CIED - Sistema de Tutoría Inteligente para Cálculo Integral
+After=network.target
+Wants=network.target
+
+[Service]
+Type=exec
+User=jarteaga
+Group=jarteaga
+WorkingDirectory=/home/jarteaga/Documents/cied
+Environment=PATH=/home/jarteaga/.local/bin:/usr/local/bin:/usr/bin:/bin
+Environment=PYTHONPATH=/home/jarteaga/Documents/cied
+# Environment=FLASK_ENV=production
+ExecStart=/bin/bash -c 'cd /home/jarteaga/Documents/cied && /home/jarteaga/.local/bin/gunicorn --workers 2 --bind 0.0.0.0:8082 --timeout 30 --log-level info wsgi:app'
+ExecReload=/bin/kill -s HUP $MAINPID
+
+# Reinicio automático
+Restart=always
+RestartSec=5
+StartLimitInterval=300
+StartLimitBurst=10
+
+# Límites básicos de recursos
+LimitNOFILE=1024
+
+# Seguridad básica - relajada para permitir acceso a home
+NoNewPrivileges=true
+ProtectHome=false
+
+[Install]
+WantedBy=multi-user.target
