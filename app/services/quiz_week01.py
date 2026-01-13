@@ -146,7 +146,9 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "source": "seed",
+        "seed_id": "w1-1"
     },
     {
         "question_latex": r"\int x \ln(x) \, dx",
@@ -231,7 +233,9 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación por derivación",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "source": "seed",
+        "seed_id": "w1-2"
     },
     {
         "question_latex": r"\int x \sin(x) \, dx",
@@ -295,7 +299,9 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación por derivación",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "source": "seed",
+        "seed_id": "w1-3"
     },
     # Integración por partes - Integrales definidas
     {
@@ -396,7 +402,9 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin justificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "source": "seed",
+        "seed_id": "w1-4"
     },
     {
         "question_latex": r"\int_{1}^{e} x \ln(x) \, dx",
@@ -488,7 +496,9 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: evaluación invertida de límites (F(a) - F(b) en lugar de F(b) - F(a))",
                 "error_id": "integral-definida-limites-invertidos"
             }
-        ]
+        ],
+        "source": "seed",
+        "seed_id": "w1-5"
     },
     {
         "question_latex": r"\int_{0}^{1} x e^{x} \, dx",
@@ -580,7 +590,9 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "source": "seed",
+        "seed_id": "w1-6"
     },
     {
         "question_latex": r"\int_{\pi/4}^{\pi/2} \sin(x) \cos(x) \, dx",
@@ -676,7 +688,9 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: mala elección de u y dv cuando hay identidades trigonométricas disponibles",
                 "error_id": "integracion-partes-innecesaria"
             }
-        ]
+        ],
+        "source": "seed",
+        "seed_id": "w1-7"
     },
     {
         "question_latex": r"\int_{0}^{1} e^{x} \cos(x) \, dx",
@@ -788,7 +802,9 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "source": "seed",
+        "seed_id": "w1-8"
     },
     # Integración por partes - Integrales indefinidas (adicionales)
     {
@@ -885,7 +901,9 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "source": "seed",
+        "seed_id": "w1-9"
     },
     {
         "question_latex": r"\int x^{2} e^{x} \, dx",
@@ -989,7 +1007,9 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "source": "seed",
+        "seed_id": "w1-10"
     },
     {
         "question_latex": r"\int x \cos(x) \, dx",
