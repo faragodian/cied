@@ -23,10 +23,13 @@ def _get_gemini_model():
         # Cualquier otro error (configuración, etc.)
         return None
 
-def generate_week01_exercise(question_latex: str) -> str:
+def generate_week01_exercise(question_latex: str) -> dict:
     """
     Genera un nuevo ejercicio similar para Week 01 (Integración por partes)
     a partir de un problema semilla.
+
+    Returns:
+        dict: Contiene 'latex' con el ejercicio generado y 'provider' con el origen
     """
 
     prompt = f"""
@@ -61,7 +64,10 @@ Salida esperada:
     if model:
         try:
             response = model.generate_content(prompt)
-            return response.text.strip()
+            return {
+                "latex": response.text.strip(),
+                "provider": "gemini"
+            }
         except Exception:
             # Si falla la API, usar fallback local
             pass
@@ -79,6 +85,12 @@ Salida esperada:
 
     # Si todos son iguales o la lista está vacía, devolver uno por defecto
     if not available_exercises:
-        return r"\int x \sin(x) \, dx"
+        return {
+            "latex": r"\int x \sin(x) \, dx",
+            "provider": "local"
+        }
 
-    return random.choice(available_exercises)
+    return {
+        "latex": random.choice(available_exercises),
+        "provider": "local"
+    }

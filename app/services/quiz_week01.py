@@ -148,7 +148,8 @@ QUIZ_TEMPLATES = [
             }
         ],
         "source": "seed",
-        "seed_id": "w1-1"
+        "seed_id": "w1-1",
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int x \ln(x) \, dx",
@@ -235,7 +236,8 @@ QUIZ_TEMPLATES = [
             }
         ],
         "source": "seed",
-        "seed_id": "w1-2"
+        "seed_id": "w1-2",
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int x \sin(x) \, dx",
@@ -301,7 +303,8 @@ QUIZ_TEMPLATES = [
             }
         ],
         "source": "seed",
-        "seed_id": "w1-3"
+        "seed_id": "w1-3",
+        "origin_label": "Se"
     },
     # Integración por partes - Integrales definidas
     {
@@ -404,7 +407,8 @@ QUIZ_TEMPLATES = [
             }
         ],
         "source": "seed",
-        "seed_id": "w1-4"
+        "seed_id": "w1-4",
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{1}^{e} x \ln(x) \, dx",
@@ -498,7 +502,8 @@ QUIZ_TEMPLATES = [
             }
         ],
         "source": "seed",
-        "seed_id": "w1-5"
+        "seed_id": "w1-5",
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{0}^{1} x e^{x} \, dx",
@@ -592,7 +597,8 @@ QUIZ_TEMPLATES = [
             }
         ],
         "source": "seed",
-        "seed_id": "w1-6"
+        "seed_id": "w1-6",
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{\pi/4}^{\pi/2} \sin(x) \cos(x) \, dx",
@@ -690,7 +696,8 @@ QUIZ_TEMPLATES = [
             }
         ],
         "source": "seed",
-        "seed_id": "w1-7"
+        "seed_id": "w1-7",
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{0}^{1} e^{x} \cos(x) \, dx",
@@ -804,7 +811,8 @@ QUIZ_TEMPLATES = [
             }
         ],
         "source": "seed",
-        "seed_id": "w1-8"
+        "seed_id": "w1-8",
+        "origin_label": "Se"
     },
     # Integración por partes - Integrales indefinidas (adicionales)
     {
@@ -903,7 +911,8 @@ QUIZ_TEMPLATES = [
             }
         ],
         "source": "seed",
-        "seed_id": "w1-9"
+        "seed_id": "w1-9",
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int x^{2} e^{x} \, dx",
@@ -1009,7 +1018,8 @@ QUIZ_TEMPLATES = [
             }
         ],
         "source": "seed",
-        "seed_id": "w1-10"
+        "seed_id": "w1-10",
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int x \cos(x) \, dx",
@@ -1105,7 +1115,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int \sec(x) \tan(x) \, dx",
@@ -1173,7 +1184,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int \arcsin(x) \, dx",
@@ -1269,7 +1281,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     # Sustitución trigonométrica - Integrales definidas
     {
@@ -1354,7 +1367,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: no regresar a variable original en sustitución trigonométrica",
                 "error_id": "sustitucion-trigonometrica-sin-regreso"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{0}^{\sqrt{2}} \sqrt{4 - x^{2}} \, dx",
@@ -1446,7 +1460,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{1}^{2} \sqrt{x^{2} - 1} \, dx",
@@ -1538,7 +1553,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{0}^{1} \frac{1}{\sqrt{4 + x^{2}}} \, dx",
@@ -1626,7 +1642,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{0}^{\pi/4} \tan(x) \, dx",
@@ -1706,7 +1723,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     # Sustitución trigonométrica - Integrales indefinidas
     {
@@ -1795,7 +1813,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: antiderivada inventada sin verificación matemática",
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int \frac{dx}{\sqrt{x^{2} + 4}}",
@@ -1887,7 +1906,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: confusión entre diferentes formas trigonométricas",
                 "error_id": "sustitucion-trigonometrica-incorrecta"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int \sqrt{4 - x^{2}} \, dx",
@@ -1987,7 +2007,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: sustitución trigonométrica incorrecta (√(a² − x²) requiere sen o cos, no tan)",
                 "error_id": "sustitucion-trigonometrica-incorrecta"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int \frac{dx}{\sqrt{x^{2} - 9}}",
@@ -2087,7 +2108,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: confusión entre diferentes formas trigonométricas",
                 "error_id": "sustitucion-trigonometrica-incorrecta",
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int \frac{x^{2} dx}{\sqrt{4 - x^{2}}}",
@@ -2191,7 +2213,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: sustitución trigonométrica incorrecta (√(a² − x²) requiere sen o cos, no tan)",
                 "error_id": "sustitucion-trigonometrica-incorrecta"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     # Integrales definidas impropias - Caso convergente simple
     {
@@ -2284,7 +2307,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: conclusión errónea sobre convergencia/divergencia",
                 "error_id": "integral-impropia-convergencia-mal-concluida"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
     # Integrales definidas impropias - Caso divergente simple
     {
@@ -2381,7 +2405,8 @@ QUIZ_TEMPLATES = [
                 "error_highlight": "Error: ignorar el límite cuando x → 1⁺ en la evaluación",
                 "error_id": "integracion-partes-derivada-u"
             }
-        ]
+        ],
+        "origin_label": "Se"
     },
 ]
 
@@ -2397,14 +2422,14 @@ def generate_dynamic_question(base_question_latex: str) -> Dict[str, Any]:
         Dict con la estructura completa del quiz instance generado dinámicamente
     """
     # Generar nuevo enunciado usando LLM
-    new_question_latex = generate_week01_exercise(base_question_latex)
+    exercise_result = generate_week01_exercise(base_question_latex)
 
     # Usar un template base como estructura (tomamos el primero)
     quiz_templates = get_quiz_templates_for_week("week01")
     template = quiz_templates[0].copy()  # Usar estructura base
 
     # Reemplazar el enunciado con el generado dinámicamente
-    template["question_latex"] = new_question_latex
+    template["question_latex"] = exercise_result["latex"]
 
     # Construir opciones con identificadores únicos (mantenemos la estructura)
     options = []
@@ -2439,16 +2464,20 @@ def generate_dynamic_question(base_question_latex: str) -> Dict[str, Any]:
 
     # Crear instancia del quiz
     quiz_instance = {
-        "question_latex": new_question_latex,
+        "question_latex": exercise_result["latex"],
         "options": options,
         "solution_steps": template.get("solution_steps", []),
         "correct_answer": template.get("correct_answer", ""),
         "week_id": "week01",
         "is_dynamic": True,  # Marca que es generado dinámicamente
-        "agent_trace": {
-            "source": "llm",
-            "model": "gemini-pro-latest"
-        }
+        "source": exercise_result["provider"],
+        "seed_id": None,
+        "origin_label": {
+            "gemini": "Ge",
+            "deepseek": "De",
+            "openai": "Op",
+            "local": "Lo"  # For fallback/local exercises
+        }.get(exercise_result["provider"], "Un")  # Unknown if not found
     }
 
     return quiz_instance
@@ -2525,7 +2554,10 @@ def get_random_question(use_dynamic: bool = False, base_question: str = None) ->
         "options": options,
         "solution_steps": template.get("solution_steps", []),
         "correct_answer": template.get("correct_answer", ""),
-        "week_id": "week01"  # Metadata para identificar la semana
+        "week_id": "week01",  # Metadata para identificar la semana
+        "source": template.get("source"),
+        "seed_id": template.get("seed_id"),
+        "origin_label": template.get("origin_label")
     }
 
     return quiz_instance

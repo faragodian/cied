@@ -37,7 +37,18 @@
         <div class="container">
             <!-- Question -->
             <div class="card">
-                <h2>📐 Pregunta</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>📐 Pregunta</h2>
+                    {% if question.seed_id %}
+                        <span style="font-size: 0.75rem; color: var(--text-secondary); background: var(--bg-tertiary); padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-family: var(--font-mono);">
+                            Se · {{ question.seed_id }}
+                        </span>
+                    {% else %}
+                        <span style="font-size: 0.75rem; color: var(--text-secondary); background: var(--bg-tertiary); padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-family: var(--font-mono);">
+                            {{ question.origin_label }}
+                        </span>
+                    {% endif %}
+                </div>
                 <div style="text-align: center; font-size: 1.5rem; margin: var(--spacing-lg) 0;">
                     ${{ question.question_latex }} = ?$
                 </div>
