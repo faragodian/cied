@@ -149,7 +149,7 @@ QUIZ_TEMPLATES = [
         ],
         "source": "seed",
         "seed_id": "w1-1",
-        "origin_label": "Se"
+        "origin_label": "Se · w1-1"
     },
     {
         "question_latex": r"\int x \ln(x) \, dx",
@@ -237,7 +237,7 @@ QUIZ_TEMPLATES = [
         ],
         "source": "seed",
         "seed_id": "w1-2",
-        "origin_label": "Se"
+        "origin_label": "Se · w1-2"
     },
     {
         "question_latex": r"\int x \sin(x) \, dx",
@@ -304,7 +304,7 @@ QUIZ_TEMPLATES = [
         ],
         "source": "seed",
         "seed_id": "w1-3",
-        "origin_label": "Se"
+        "origin_label": "Se · w1-3"
     },
     # Integración por partes - Integrales definidas
     {
@@ -408,7 +408,7 @@ QUIZ_TEMPLATES = [
         ],
         "source": "seed",
         "seed_id": "w1-4",
-        "origin_label": "Se"
+        "origin_label": "Se · w1-4"
     },
     {
         "question_latex": r"\int_{1}^{e} x \ln(x) \, dx",
@@ -503,7 +503,7 @@ QUIZ_TEMPLATES = [
         ],
         "source": "seed",
         "seed_id": "w1-5",
-        "origin_label": "Se"
+        "origin_label": "Se · w1-5"
     },
     {
         "question_latex": r"\int_{0}^{1} x e^{x} \, dx",
@@ -598,7 +598,7 @@ QUIZ_TEMPLATES = [
         ],
         "source": "seed",
         "seed_id": "w1-6",
-        "origin_label": "Se"
+        "origin_label": "Se · w1-6"
     },
     {
         "question_latex": r"\int_{\pi/4}^{\pi/2} \sin(x) \cos(x) \, dx",
@@ -697,7 +697,7 @@ QUIZ_TEMPLATES = [
         ],
         "source": "seed",
         "seed_id": "w1-7",
-        "origin_label": "Se"
+        "origin_label": "Se · w1-7"
     },
     {
         "question_latex": r"\int_{0}^{1} e^{x} \cos(x) \, dx",
@@ -812,7 +812,7 @@ QUIZ_TEMPLATES = [
         ],
         "source": "seed",
         "seed_id": "w1-8",
-        "origin_label": "Se"
+        "origin_label": "Se · w1-8"
     },
     # Integración por partes - Integrales indefinidas (adicionales)
     {
