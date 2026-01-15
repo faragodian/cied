@@ -149,7 +149,7 @@ QUIZ_TEMPLATES = [
         ],
         "source": "seed",
         "seed_id": "w1-1",
-        "origin_label": "Se · w1-1"
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int x \ln(x) \, dx",
@@ -237,7 +237,7 @@ QUIZ_TEMPLATES = [
         ],
         "source": "seed",
         "seed_id": "w1-2",
-        "origin_label": "Se · w1-2"
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int x \sin(x) \, dx",
@@ -302,9 +302,7 @@ QUIZ_TEMPLATES = [
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
         ],
-        "source": "seed",
-        "seed_id": "w1-3",
-        "origin_label": "Se · w1-3"
+        "origin_label": "Se"
     },
     # Integración por partes - Integrales definidas
     {
@@ -406,9 +404,7 @@ QUIZ_TEMPLATES = [
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
         ],
-        "source": "seed",
-        "seed_id": "w1-4",
-        "origin_label": "Se · w1-4"
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{1}^{e} x \ln(x) \, dx",
@@ -501,9 +497,7 @@ QUIZ_TEMPLATES = [
                 "error_id": "integral-definida-limites-invertidos"
             }
         ],
-        "source": "seed",
-        "seed_id": "w1-5",
-        "origin_label": "Se · w1-5"
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{0}^{1} x e^{x} \, dx",
@@ -596,9 +590,7 @@ QUIZ_TEMPLATES = [
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
         ],
-        "source": "seed",
-        "seed_id": "w1-6",
-        "origin_label": "Se · w1-6"
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{\pi/4}^{\pi/2} \sin(x) \cos(x) \, dx",
@@ -696,8 +688,8 @@ QUIZ_TEMPLATES = [
             }
         ],
         "source": "seed",
-        "seed_id": "w1-7",
-        "origin_label": "Se · w1-7"
+        "seed_id": "w1-3",
+        "origin_label": "Se"
     },
     {
         "question_latex": r"\int_{0}^{1} e^{x} \cos(x) \, dx",
@@ -810,9 +802,7 @@ QUIZ_TEMPLATES = [
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
         ],
-        "source": "seed",
-        "seed_id": "w1-8",
-        "origin_label": "Se · w1-8"
+        "origin_label": "Se"
     },
     # Integración por partes - Integrales indefinidas (adicionales)
     {
@@ -910,8 +900,6 @@ QUIZ_TEMPLATES = [
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
         ],
-        "source": "seed",
-        "seed_id": "w1-9",
         "origin_label": "Se"
     },
     {
@@ -1017,8 +1005,6 @@ QUIZ_TEMPLATES = [
                 "error_id": "integracion-partes-antiderivada-inventada"
             }
         ],
-        "source": "seed",
-        "seed_id": "w1-10",
         "origin_label": "Se"
     },
     {
@@ -2692,6 +2678,22 @@ def validate_quiz_templates_week01() -> Dict[str, Any]:
 
 # Registro del WeekSpec para Week 01
 # Se ejecuta al importar el módulo, después de que QUIZ_TEMPLATES esté definido
+
+def normalize_week01_seed_metadata():
+    """
+    Garantiza que TODOS los ejercicios semilla tengan:
+    - source = "seed"
+    - origin_label = "Se"
+    - seed_id = "w1-N"
+    """
+    for idx, template in enumerate(QUIZ_TEMPLATES, start=1):
+        template["source"] = "seed"
+        template["origin_label"] = "Se"
+        template["seed_id"] = f"w1-{idx}"
+
+
+normalize_week01_seed_metadata()
+
 week01_spec = WeekSpec(
     week_id="week01",
     title="Semana 1",
