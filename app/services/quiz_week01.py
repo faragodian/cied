@@ -10,6 +10,14 @@ from .weeks import get_quiz_templates_for_week, WeekSpec, register_week
 from .llm_generator import generate_week01_exercise
 
 
+# Configuración pedagógica del switch para mezclar ejercicios seed y LLM
+SEED_RATIO = 0.5  # Proporción de ejercicios basados en semillas (0.0 - 1.0)
+LLM_RATIO = 0.5   # Proporción de ejercicios generados dinámicamente (0.0 - 1.0)
+
+# Validación: las proporciones deben sumar 1.0
+assert SEED_RATIO + LLM_RATIO == 1.0, f"SEED_RATIO ({SEED_RATIO}) + LLM_RATIO ({LLM_RATIO}) must equal 1.0"
+
+
 # Plantillas de preguntas para el quiz de Semana 1
 QUIZ_TEMPLATES = [
     {
@@ -2469,6 +2477,39 @@ def generate_dynamic_question(base_question_latex: str) -> Dict[str, Any]:
     return quiz_instance
 
 
+def is_llm_available() -> bool:
+    """
+    Verifica si la generación LLM está disponible (API keys configuradas).
+
+    Returns:
+        True si se puede generar ejercicios dinámicos, False si debe usar seeds
+    """
+    try:
+        # Importar función de verificación del generador LLM
+        from .llm_generator import _get_gemini_model
+        model = _get_gemini_model()
+        return model is not None
+    except Exception:
+        return False
+
+
+def choose_exercise_origin() -> str:
+    """
+    Decide pedagógicamente si usar un ejercicio seed o generado por LLM.
+    Respeta reglas pedagógicas: fuerza 'seed' si LLM no está disponible.
+
+    Returns:
+        "seed": usar ejercicio basado en plantillas predefinidas
+        "llm": generar ejercicio dinámicamente usando LLM
+    """
+    # Regla pedagógica: si no hay LLM disponible, usar seeds
+    if not is_llm_available():
+        return "seed"
+
+    # Switch pedagógico basado en ratios configurados
+    return "seed" if random.random() < SEED_RATIO else "llm"
+
+
 def get_another_question(current_question_latex: str) -> Dict[str, Any]:
     """
     Genera otro ejercicio dinámico basado en el ejercicio actual.
@@ -2493,11 +2534,24 @@ def get_random_question(use_dynamic: bool = False, base_question: str = None) ->
     Returns:
         Dict con la estructura completa del quiz instance
     """
-    # Si se solicita ejercicio dinámico, usar LLM generator
+    # Si se solicita ejercicio dinámico explícitamente, usar LLM generator
     if use_dynamic and base_question:
         return generate_dynamic_question(base_question)
 
-    # Obtener templates desde WeekSpec (mantiene backward compatibility)
+    # Switch pedagógico: decidir origen del ejercicio
+    origin = choose_exercise_origin()
+
+    # Si el switch elige "llm", generar dinámicamente
+    if origin == "llm":
+        # Obtener un template seed aleatorio como base para el LLM
+        quiz_templates = get_quiz_templates_for_week("week01")
+        base_template = random.choice(quiz_templates)
+        base_question_latex = base_template["question_latex"]
+
+        # Generar ejercicio dinámico usando el template como base
+        return generate_dynamic_question(base_question_latex)
+
+    # Origen "seed": usar templates predefinidos
     quiz_templates = get_quiz_templates_for_week("week01")
 
     # Seleccionar plantilla aleatoria
