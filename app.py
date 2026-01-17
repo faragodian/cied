@@ -6,7 +6,6 @@ Punto de entrada principal para desarrollo de cied
 from app import create_app
 from config import Config
 
-
 if __name__ == "__main__":
     app = create_app()
     app.run(
