@@ -1,96 +1,192 @@
 """
-Agente Generador de Ejercicios basado en LLM
-Sistema CIED - Week 01
+CIED - LLM Generator
+===================
+
+Generador de ejercicios usando LLMs externos.
+Soporta Gemini, DeepSeek y OpenAI con control explícito.
+
+NO existe generación local.
+Si ninguna LLM está disponible o falla, se devuelve None
+y el sistema sirve un Seed (Se) de forma silenciosa.
 """
 
 import os
 import random
+import logging
 
-# Importar y configurar Gemini solo cuando sea necesario
-def _get_gemini_model():
-    """Obtiene el modelo Gemini configurado, o None si no hay API key."""
-    try:
-        import google.generativeai as genai
-        api_key = os.environ.get("GEMINI_API_KEY")
-        if not api_key:
-            return None
-        genai.configure(api_key=api_key)
-        return genai.GenerativeModel("models/gemini-pro-latest")
-    except ImportError:
-        # Si no está instalado google-generativeai, usar fallback
-        return None
-    except Exception:
-        # Cualquier otro error (configuración, etc.)
-        return None
+logger = logging.getLogger(__name__)
 
-def generate_week01_exercise(question_latex: str) -> dict:
-    """
-    Genera un nuevo ejercicio similar para Week 01 (Integración por partes)
-    a partir de un problema semilla.
+# ======================================================
+# CONFIGURACIÓN EXPLÍCITA (NO MAGIA)
+# ======================================================
 
-    Returns:
-        dict: Contiene 'latex' con el ejercicio generado y 'provider' con el origen
-    """
+ENABLE_GEMINI   = True
+ENABLE_DEEPSEEK = True
+ENABLE_OPENAI   = True
 
-    prompt = f"""
-Eres el Agente Generador de Ejercicios del sistema CIED.
+# Orden de prioridad cuando varias están habilitadas
+LLM_PRIORITY = ["deepseek", "gemini", "openai"]
 
-Contexto académico:
-- Curso: Cálculo Integral (nivel universitario)
-- Semana: Week 01
-- Técnica: Integración por partes
-- Tipo de problema: Integral indefinida o definida
-- Formato: Selección múltiple con una única respuesta correcta
+# ======================================================
+# PROMPT BASE – WEEK 01
+# ======================================================
 
-Problema semilla:
-\"\"\"
-{question_latex}
-\"\"\"
+WEEK01_PROMPT = """
+Eres un profesor universitario de Cálculo Integral.
 
-Instrucciones estrictas:
-1. Genera UN nuevo ejercicio matemático distinto pero equivalente en dificultad y técnica.
-2. Debe poder resolverse por integración por partes.
-3. NO reutilices funciones, constantes ni límites del problema semilla.
-4. NO incluyas solución ni opciones.
-5. Devuelve solo el enunciado en LaTeX.
-6. El ejercicio debe ser adecuado para activar errores comunes de integración por partes.
+Genera UN (1) ejercicio nuevo, similar pero NO idéntico
+a ejercicios típicos de Integración por Partes.
 
-Salida esperada:
-- Un único enunciado matemático en LaTeX.
+Requisitos:
+- Nivel: Cálculo universitario
+- No incluyas solución
+- Usa notación LaTeX válida
+- Debe poder resolverse con integración por partes
+- Enunciado claro y conciso
+
+Devuelve SOLO el enunciado del ejercicio en LaTeX.
 """
 
-    # Intentar usar Gemini si está disponible
-    model = _get_gemini_model()
-    if model:
-        try:
-            response = model.generate_content(prompt)
-            return {
-                "latex": response.text.strip(),
-                "provider": "gemini"
-            }
-        except Exception:
-            # Si falla la API, usar fallback local
-            pass
+# ======================================================
+# LLM IMPLEMENTATIONS
+# ======================================================
 
-    # Fallback local: seleccionar ejercicio aleatorio diferente al problema semilla
-    fallback_exercises = [
-        r"\int x \sin(x) \, dx",
-        r"\int x \cos(x) \, dx",
-        r"\int x^2 e^{x} \, dx",
-        r"\int x \ln(x) \, dx"
-    ]
+def _generate_with_gemini(prompt: str):
+    try:
+        import google.generativeai as genai
 
-    # Filtrar ejercicios que no sean idénticos al problema semilla
-    available_exercises = [ex for ex in fallback_exercises if ex != question_latex]
+        api_key = os.environ.get("GEMINI_API_KEY")
+        if not api_key:
+            logger.warning("GEMINI_API_KEY no definida")
+            return None
 
-    # Si todos son iguales o la lista está vacía, devolver uno por defecto
-    if not available_exercises:
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel("models/gemini-pro-latest")
+        response = model.generate_content(prompt)
+
+        if not response or not response.text:
+            return None
+
         return {
-            "latex": r"\int x \sin(x) \, dx",
-            "provider": "local"
+            "latex": response.text.strip(),
+            "provider": "gemini"
         }
 
-    return {
-        "latex": random.choice(available_exercises),
-        "provider": "local"
-    }
+    except Exception as e:
+        logger.exception("Gemini falló")
+        return None
+
+
+def _generate_with_deepseek(prompt: str):
+    try:
+        from openai import OpenAI
+
+        api_key = os.environ.get("DEEPSEEK_API_KEY")
+        if not api_key:
+            logger.warning("DEEPSEEK_API_KEY no definida")
+            return None
+
+        client = OpenAI(
+            api_key=api_key,
+            base_url="https://api.deepseek.com"
+        )
+
+        resp = client.chat.completions.create(
+            model="deepseek-chat",
+            messages=[
+                {"role": "system", "content": "Eres un profesor de matemáticas."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+        )
+
+        text = resp.choices[0].message.content.strip()
+        if not text:
+            return None
+
+        return {
+            "latex": text,
+            "provider": "deepseek"
+        }
+
+    except Exception:
+        logger.exception("DeepSeek falló")
+        return None
+
+
+def _generate_with_openai(prompt: str):
+    try:
+        from openai import OpenAI
+
+        api_key = os.environ.get("OPENAI_API_KEY")
+        if not api_key:
+            logger.warning("OPENAI_API_KEY no definida")
+            return None
+
+        client = OpenAI(api_key=api_key)
+
+        resp = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Eres un profesor de matemáticas."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+        )
+
+        text = resp.choices[0].message.content.strip()
+        if not text:
+            return None
+
+        return {
+            "latex": text,
+            "provider": "openai"
+        }
+
+    except Exception:
+        logger.exception("OpenAI falló")
+        return None
+
+
+# ======================================================
+# DISPATCHER PRINCIPAL
+# ======================================================
+
+def generate_week01_exercise():
+    """
+    Intenta generar un ejercicio usando LLMs externos.
+    Si todos fallan o están deshabilitados → retorna None.
+    """
+
+    providers = []
+
+    if ENABLE_DEEPSEEK:
+        providers.append("deepseek")
+    if ENABLE_GEMINI:
+        providers.append("gemini")
+    if ENABLE_OPENAI:
+        providers.append("openai")
+
+    # Respetar orden de prioridad
+    providers = [p for p in LLM_PRIORITY if p in providers]
+
+    for provider in providers:
+        if provider == "deepseek":
+            result = _generate_with_deepseek(WEEK01_PROMPT)
+        elif provider == "gemini":
+            result = _generate_with_gemini(WEEK01_PROMPT)
+        elif provider == "openai":
+            result = _generate_with_openai(WEEK01_PROMPT)
+        else:
+            result = None
+
+        if result:
+            logger.info(f"Ejercicio generado por {provider}")
+            return result
+
+    # Ninguna LLM funcionó → Seed
+    logger.info("Ninguna LLM disponible, usando Seed")
+    return None
+
+
+

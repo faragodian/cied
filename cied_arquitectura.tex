@@ -1,0 +1,497 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{float}
+
+\geometry{margin=2.5cm}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\pagestyle{fancy}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    breaklines=true,
+    captionpos=b
+}
+
+\title{\textbf{Análisis Arquitectónico del Sistema CIED} \\
+\textit{Cálculo Integral + Ecuaciones Diferenciales}}
+\author{Sistema CIED - Documentación Técnica}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Este documento presenta un análisis completo del sistema CIED (Cálculo Integral + Ecuaciones Diferenciales), una aplicación web educativa desarrollada en Flask que combina un repositorio de errores matemáticos con un sistema de evaluación interactiva basado en inteligencia artificial. Se detalla su arquitectura, componentes principales, flujo de funcionamiento y tecnologías utilizadas.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introducción al Sistema CIED}
+
+\subsection{Propósito y Alcance}
+
+El sistema CIED es una plataforma educativa innovadora diseñada para apoyar el aprendizaje de técnicas avanzadas de cálculo integral y ecuaciones diferenciales. Combina dos componentes principales:
+
+\begin{enumerate}
+    \item \textbf{Repositorio de Errores}: Base de conocimiento estructurada de errores comunes cometidos por estudiantes
+    \item \textbf{Sistema de Quiz Interactivo}: Plataforma de evaluación con generación dinámica de ejercicios usando IA
+\end{enumerate}
+
+\subsection{Contexto Educativo}
+
+\begin{itemize}
+    \item \textbf{Curso}: Cálculo Integral y Ecuaciones Diferenciales (MATE-1214)
+    \item \textbf{Nivel}: Universitario avanzado
+    \item \textbf{Metodología}: Aprendizaje basado en errores con retroalimentación inmediata
+    \item \textbf{Tecnología}: Integración de IA para personalización de ejercicios
+\end{itemize}
+
+\subsection{Objetivos Pedagógicos}
+
+\begin{itemize}
+    \item Identificar y catalogar patrones de error comunes
+    \item Proporcionar retroalimentación específica y actionable
+    \item Generar ejercicios adaptativos usando IA
+    \item Facilitar el aprendizaje autónomo y la remediación
+\end{itemize}
+
+\section{Arquitectura General}
+
+\subsection{Patrones de Diseño Implementados}
+
+El sistema CIED sigue las mejores prácticas de desarrollo web moderno:
+
+\begin{itemize}
+    \item \textbf{Application Factory Pattern}: Para configuración flexible
+    \item \textbf{Blueprint Pattern}: Para organización modular de rutas
+    \item \textbf{Repository Pattern}: Para acceso a datos estructurado
+    \item \textbf{Service Layer Pattern}: Para separación de lógica de negocio
+\end{itemize}
+
+\subsection{Estructura de Directorios}
+
+\begin{lstlisting}[caption=Estructura del proyecto CIED]
+cied/
+├── app/                          # Aplicación Flask
+│   ├── __init__.py              # Application factory
+│   ├── blueprints/              # Rutas organizadas
+│   │   ├── core.py              # Landing y syllabus
+│   │   ├── errors.py            # Gestión de errores
+│   │   └── quiz.py              # Sistema de quiz
+│   ├── services/                # Lógica de negocio
+│   │   ├── errors_repo.py       # Repositorio de errores
+│   │   ├── llm_generator.py     # Generador LLM
+│   │   ├── quiz_week01.py       # Lógica Week 01
+│   │   ├── remediator.py        # Sistema de remediación
+│   │   └── weeks.py             # Framework extensible
+│   ├── templates/               # Plantillas Jinja2
+│   └── static/                  # Recursos estáticos
+├── data/errors/                 # Base de errores (JSON)
+├── docs/syllabus/               # Documentación pedagógica
+├── scripts/                     # Utilidades de deployment
+├── tests/                       # Suite de pruebas
+└── config.py                    # Configuración centralizada
+\end{lstlisting}
+
+\subsection{Tecnologías Principales}
+
+\begin{table}[H]
+\centering
+\caption{Tecnologías del Sistema CIED}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Componente} & \textbf{Tecnología} & \textbf{Versión} \\
+\midrule
+Backend & Python Flask & 2.3.3 \\
+Base de Datos & JSON (Filesystem) & - \\
+Frontend & HTML5 + CSS3 + MathJax & - \\
+IA Generativa & Google Gemini API & 1.x \\
+Renderizado LaTeX & MathJax & 3.x \\
+Testing & pytest & 7.4.0 \\
+Deployment & systemd + Gunicorn & - \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Componentes Principales}
+
+\subsection{Repositorio de Errores}
+
+\subsubsection{Estructura de Datos}
+
+Cada error se almacena como un documento JSON estructurado:
+
+\begin{lstlisting}[language=json, caption=Estructura de un error en CIED]
+{
+  "id": "integracion-partes-eleccion-uv",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Integración por partes",
+  "titulo": "Elección incorrecta de u y dv",
+  "descripcion_corta": "...",
+  "prerrequisitos": ["..."],
+  "sintomas": ["..."],
+  "patron_error": {
+    "latex": "\\int x e^{x} \\, dx",
+    "explicacion": "..."
+  },
+  "deteccion": {
+    "tipo": "Análisis de dificultad relativa",
+    "reglas": ["..."]
+  },
+  "remediacion": {
+    "estrategia": "Aplicar regla LIATE",
+    "pistas": ["..."],
+    "mini_leccion": {
+      "latex": "...",
+      "nota": "..."
+    }
+  },
+  "ejercicio_correctivo": [...],
+  "verificacion": {...},
+  "metadata": {
+    "tags": ["integración por partes", "LIATE"]
+  }
+}
+\end{lstlisting}
+
+\subsubsection{Repositorio de Errores (ErrorsRepository)}
+
+\begin{itemize}
+    \item \textbf{Carga Perezosa}: Los errores se cargan bajo demanda
+    \item \textbf{Cache Simple}: Implementación de cache en memoria
+    \item \textbf{Búsqueda Inteligente}: Por título, tags y contenido
+    \item \textbf{Validación Robusta}: Manejo de errores de parsing
+\end{itemize}
+
+\subsection{Sistema de Quiz Interactivo}
+
+\subsubsection{Framework de Semanas (WeekSpec)}
+
+El sistema implementa un framework extensible para agregar nuevas semanas:
+
+\begin{lstlisting}[language=Python, caption=Clase WeekSpec - Framework Extensible]
+class WeekSpec:
+    """
+    Especificación canónica para una semana del curso.
+    Define estructura completa para implementar quiz semanal.
+    """
+
+    def __init__(
+        self,
+        week_id: str,
+        title: str,
+        subtitle: str,
+        temas: List[str],
+        tecnicas: List[str],
+        descripcion: str,
+        quiz_templates: List[Dict[str, Any]],
+        error_tags: Optional[List[str]] = None
+    ):
+        # Atributos de metadata y configuración
+        pass
+\end{lstlisting}
+
+\subsubsection{Generador LLM (LLMGenerator)}
+
+Sistema de generación dinámica de ejercicios:
+
+\begin{itemize}
+    \item \textbf{Prompt Engineering}: Prompts específicos por técnica matemática
+    \item \textbf{Fallback Seguro}: Si falla la IA, retorna None
+    \item \textbf{Provider Actual}: Google Gemini (extensible a otros)
+    \item \textbf{Configuración Segura}: API keys via variables de entorno
+\end{itemize}
+
+\subsubsection{Política Pedagógica 50/50}
+
+\begin{lstlisting}[language=Python, caption=Configuración Pedagógica]
+# Configuración pedagógica del switch para mezclar ejercicios
+SEED_RATIO = 0.5  # Proporción de ejercicios basados en semillas
+LLM_RATIO = 0.5   # Proporción de ejercicios generados dinámicamente
+
+# Validación: las proporciones deben sumar 1.0
+assert SEED_RATIO + LLM_RATIO == 1.0
+\end{lstlisting}
+
+\subsection{Sistema de Remediación}
+
+Implementa lógica determinística para acciones de remediación:
+
+\begin{lstlisting}[language=Python, caption=Sistema de Remediación Determinístico]
+def remediate(error_id: str, context: Optional[Dict] = None) -> Dict:
+    """
+    Determina acción de remediación basada en patrones de error.
+    No requiere LLMs ni bases de datos externas.
+    """
+    if "innecesaria" in error_id.lower():
+        return {
+            "action": RemediationAction.REINFORCE,
+            "reason": "Error indica falta de comprensión conceptual básica"
+        }
+
+    if "antiderivada" in error_id.lower() or "derivada" in error_id.lower():
+        return {
+            "action": RemediationAction.RETRY,
+            "reason": "Error en cálculo algebraico, permitir reintento"
+        }
+
+    return {
+        "action": RemediationAction.HALT,
+        "reason": "Error requiere análisis pedagógico detallado"
+    }
+\end{lstlisting}
+
+\section{Flujo de Funcionamiento}
+
+\subsection{Flujo del Quiz}
+
+\begin{tikzpicture}[node distance=2cm, auto]
+    \node [draw, rectangle, fill=blue!20] (start) {Inicio Quiz};
+    \node [draw, rectangle, fill=green!20, below of=start] (select) {Selección de Pregunta};
+    \node [draw, rectangle, fill=yellow!20, below of=select] (display) {Mostrar Pregunta};
+    \node [draw, rectangle, fill=orange!20, below of=display] (answer) {Procesar Respuesta};
+    \node [draw, diamond, fill=red!20, below of=answer] (check) {¿Correcta?};
+    \node [draw, rectangle, fill=green!30, right of=check, xshift=2cm] (correct) {Mostrar Solución};
+    \node [draw, rectangle, fill=red!30, left of=check, xshift=-2cm] (error) {Mostrar Error + Remedio};
+
+    \draw [->] (start) -- (select);
+    \draw [->] (select) -- (display);
+    \draw [->] (display) -- (answer);
+    \draw [->] (answer) -- (check);
+    \draw [->] (check) -| (correct);
+    \draw [->] (check) -| (error);
+\end{tikzpicture}
+
+\subsection{Algoritmo de Selección de Ejercicios}
+
+\begin{enumerate}
+    \item \textbf{Generar Número Aleatorio}: Entre 0.0 y 1.0
+    \item \textbf{Decidir Fuente}:
+        \begin{itemize}
+            \item Si random $<$ SEED\_RATIO $\rightarrow$ Usar ejercicio seed
+            \item Si random $\geq$ SEED\_RATIO $\rightarrow$ Generar con LLM
+        \end{itemize}
+    \item \textbf{Validar Disponibilidad}: Si LLM falla, usar seed como fallback
+    \item \textbf{Marcar Origen}: Para trazabilidad pedagógica
+\end{enumerate}
+
+\subsection{Procesamiento de Respuestas}
+
+\begin{enumerate}
+    \item \textbf{Validar Entrada}: Verificar que se seleccionó opción válida
+    \item \textbf{Comparar Respuesta}: Verificar si coincide con opción correcta
+    \item \textbf{Generar Retroalimentación}:
+        \begin{itemize}
+            \item Correcta: Mostrar procedimiento completo
+            \item Incorrecta: Mostrar error específico + explicación
+        \end{itemize}
+    \item \textbf{Acción de Remediación}: Basada en tipo de error cometido
+\end{enumerate}
+
+\section{API y Endpoints}
+
+\subsection{Endpoints Principales}
+
+\begin{table}[H]
+\centering
+\caption{API Endpoints del Sistema CIED}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Método} & \textbf{Endpoint} & \textbf{Descripción} & \textbf{Respuesta} \\
+\midrule
+GET & / & Página principal & HTML \\
+GET & /syllabus & Syllabus del curso & HTML \\
+GET & /health & Health check & JSON \\
+GET & /quiz/week01 & Quiz Semana 1 & HTML \\
+POST & /quiz/week01 & Procesar respuesta & HTML \\
+GET & /errors & Lista errores & JSON \\
+GET & /errors/<id> & Error específico & JSON \\
+GET & /errors/search?q=<query> & Búsqueda de errores & JSON \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Ejemplo de Uso de la API}
+
+\begin{lstlisting}[language=bash, caption=Consultar Health Check]
+curl http://localhost:8082/health
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash, caption=Buscar errores relacionados con integración]
+curl "http://localhost:8082/errors/search?q=integracion"
+\end{lstlisting}
+
+\section{Configuración y Deployment}
+
+\subsection{Variables de Entorno}
+
+\begin{table}[H]
+\centering
+\caption{Variables de Entorno Principales}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Variable} & \textbf{Descripción} & \textbf{Default} & \textbf{Requerida} \\
+\midrule
+FLASK\_ENV & Entorno de ejecución & development & No \\
+GEMINI\_API\_KEY & API Key de Gemini & - & Sí (para LLM) \\
+HOST & IP de binding & 0.0.0.0 & No \\
+PORT & Puerto de escucha & 8082 & No \\
+SECRET\_KEY & Clave secreta Flask & dev-key & No \\
+LOG\_LEVEL & Nivel de logging & INFO & No \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Deployment en Producción}
+
+El sistema está configurado para deployment con systemd:
+
+\begin{itemize}
+    \item \textbf{Servidor WSGI}: Gunicorn para producción
+    \item \textbf{Servicio Systemd}: Configurado en \texttt{cied.service}
+    \item \textbf{Logging}: Configurado para rotación automática
+    \item \textbf{Monitorización}: Endpoint /health para health checks
+\end{itemize}
+
+\section{Escalabilidad y Extensión}
+
+\subsection{Agregar Nueva Semana}
+
+El framework permite extender fácilmente a nuevas semanas:
+
+\begin{enumerate}
+    \item Crear \texttt{quiz\_week02.py} con templates de ejercicios
+    \item Configurar \texttt{WeekSpec} con metadata de la semana
+    \item Agregar rutas en blueprint quiz: \texttt{/quiz/week02}
+    \item Crear template HTML: \texttt{quiz\_week02.html}
+    \item Registrar en sistema via \texttt{register\_week()}
+\end{enumerate}
+
+\subsection{Extensión de Proveedores LLM}
+
+El sistema es extensible a múltiples proveedores de IA:
+
+\begin{lstlisting}[language=Python, caption=Extensión a Múltiples Proveedores LLM]
+def _get_llm_model():
+    """Factory method para obtener modelo LLM disponible."""
+    # Intentar Gemini primero
+    if os.environ.get("GEMINI_API_KEY"):
+        return _get_gemini_model()
+
+    # Intentar OpenAI como fallback
+    if os.environ.get("OPENAI_API_KEY"):
+        return _get_openai_model()
+
+    # Intentar DeepSeek como último recurso
+    if os.environ.get("DEEPSEEK_API_KEY"):
+        return _get_deepseek_model()
+
+    return None  # Sin LLM disponible
+\end{lstlisting}
+
+\section{Consideraciones de Seguridad}
+
+\subsection{Protección de API Keys}
+
+\begin{itemize}
+    \item \textbf{Variables de Entorno}: Nunca hardcodear claves en código
+    \item \textbf{Archivo .env}: No versionar, incluir en .gitignore
+    \item \textbf{Validación}: Verificar existencia antes de usar APIs
+    \item \textbf{Fallback Seguro}: Funcionalidad completa sin LLM si falla
+\end{itemize}
+
+\subsection{Validación de Entrada}
+
+\begin{itemize}
+    \item \textbf{Sanitización}: Validar todas las entradas de usuario
+    \item \textbf{Límite de Tamaño}: Controlar tamaño de payloads
+    \item \textbf{Tipo de Datos}: Verificar tipos de datos esperados
+    \item \textbf{XSS Protection}: Escapar contenido dinámico en templates
+\end{itemize}
+
+\section{Testing y Calidad}
+
+\subsection{Suite de Pruebas}
+
+\begin{itemize}
+    \item \textbf{Framework}: pytest con cobertura
+    \item \textbf{Pruebas Unitarias}: Para servicios y utilidades
+    \item \textbf{Pruebas de Integración}: Para rutas y API
+    \item \textbf{Validación de Datos}: Para estructura de errores JSON
+\end{itemize}
+
+\subsection{Validación Pedagógica}
+
+Scripts específicos para validar contenido educativo:
+
+\begin{itemize}
+    \item \textbf{validate\_week01.py}: Verifica integridad de Week 01
+    \item \textbf{Verificación de Templates}: Consistencia de ejercicios
+    \item \textbf{Validación de Errores}: Estructura JSON correcta
+\end{itemize}
+
+\section{Conclusión}
+
+\subsection{Logros Arquitectónicos}
+
+El sistema CIED demuestra una arquitectura robusta y extensible:
+
+\begin{itemize}
+    \item \textbf{Modularidad}: Separación clara de responsabilidades
+    \item \textbf{Escalabilidad}: Framework extensible para nuevas semanas
+    \item \textbf{Resiliencia}: Funcionamiento completo sin dependencias externas
+    \item \textbf{Seguridad}: Protección de credenciales y validación de entrada
+    \item \textbf{Mantenibilidad}: Código bien estructurado y documentado
+\end{itemize}
+
+\subsection{Ventajas Pedagógicas}
+
+\begin{itemize}
+    \item \textbf{Personalización}: Generación adaptativa de ejercicios
+    \item \textbf{Retroalimentación Específica}: Errores catalogados con remedios
+    \item \textbf{Aprendizaje Activo}: Interacción inmediata con corrección
+    \item \textbf{Escalabilidad}: Fácil adición de nuevo contenido
+\end{itemize}
+
+\subsection{Futuras Extensiones}
+
+\begin{itemize}
+    \item \textbf{Múltiples Proveedores LLM}: OpenAI, DeepSeek, Anthropic
+    \item \textbf{Análisis de Aprendizaje}: Tracking de progreso estudiantil
+    \item \textbf{Gamificación}: Sistema de puntos y logros
+    \item \textbf{Multi-idioma}: Soporte para español e inglés
+    \item \textbf{Móvil}: Aplicación responsive y PWA
+\end{itemize}
+
+El sistema CIED representa un ejemplo exitoso de integración de tecnología educativa moderna con principios de arquitectura de software sólida, ofreciendo una plataforma escalable para el aprendizaje de matemáticas avanzadas.
+
+\end{document}
