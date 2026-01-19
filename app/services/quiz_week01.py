@@ -5,14 +5,14 @@ Contiene plantillas de preguntas con opciones correctas e incorrectas
 
 import random
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 from .weeks import get_quiz_templates_for_week, WeekSpec, register_week
 from .llm_generator import generate_week01_exercise
 
 
 # Configuración pedagógica del switch para mezclar ejercicios seed y LLM
-SEED_RATIO = 0.5  # Proporción de ejercicios basados en semillas (0.0 - 1.0)
-LLM_RATIO = 0.5   # Proporción de ejercicios generados dinámicamente (0.0 - 1.0)
+SEED_RATIO = 0.0  # Proporción de ejercicios basados en semillas (0.0 - 1.0)
+LLM_RATIO = 1.0   # Proporción de ejercicios generados dinámicamente (0.0 - 1.0)
 
 # Validación: las proporciones deben sumar 1.0
 assert SEED_RATIO + LLM_RATIO == 1.0, f"SEED_RATIO ({SEED_RATIO}) + LLM_RATIO ({LLM_RATIO}) must equal 1.0"
@@ -2405,7 +2405,7 @@ QUIZ_TEMPLATES = [
 ]
 
 
-def generate_dynamic_question(base_question_latex: str) -> Dict[str, Any]:
+def generate_dynamic_question(base_question_latex: str) -> Optional[Dict[str, Any]]:
     """
     Genera un ejercicio dinámico basado en un ejercicio semilla usando LLM.
 
@@ -2414,67 +2414,21 @@ def generate_dynamic_question(base_question_latex: str) -> Dict[str, Any]:
 
     Returns:
         Dict con la estructura completa del quiz instance generado dinámicamente
+        None si no hay LLM disponible o la generación falla
     """
-    # Generar nuevo enunciado usando LLM
-    exercise_result = generate_week01_exercise(base_question_latex)
+    # IMPORTANTE: Para mantener coherencia (enunciado ↔ respuesta ↔ distractores ↔ error_id),
+    # el LLM debe generar el ítem COMPLETO, no solo el enunciado.
+    from .llm_generator import generate_week01_quiz_instance
 
-    # Usar un template base como estructura (tomamos el primero)
-    quiz_templates = get_quiz_templates_for_week("week01")
-    template = quiz_templates[0].copy()  # Usar estructura base
+    quiz_obj = generate_week01_quiz_instance()
+    if quiz_obj is None:
+        return None
 
-    # Reemplazar el enunciado con el generado dinámicamente
-    template["question_latex"] = exercise_result["latex"]
-
-    # Construir opciones con identificadores únicos (mantenemos la estructura)
-    options = []
-
-    # Opción correcta (usamos la estructura pero adaptamos)
-    correct_option = {
-        "option_id": "correct",
-        "latex": template["choices_latex"][template["correct_index"]],
-        "is_correct": True,
-        "solution_steps": template.get("solution_steps", []),
-        "final_answer": template.get("correct_answer", "")
-    }
-    options.append(correct_option)
-
-    # Opciones incorrectas
-    for i, (choice_latex, wrong_option) in enumerate(zip(
-        [c for j, c in enumerate(template["choices_latex"]) if j != template["correct_index"]],
-        template.get("wrong_options", [])
-    )):
-        incorrect_option = {
-            "option_id": f"incorrect_{i}",
-            "latex": choice_latex,
-            "is_correct": False,
-            "error_id": wrong_option.get("error_id", ""),
-            "wrong_steps": wrong_option.get("wrong_steps", []),
-            "error_highlight": wrong_option.get("error_highlight", "")
-        }
-        options.append(incorrect_option)
-
-    # Mezclar opciones
-    random.shuffle(options)
-
-    # Crear instancia del quiz
-    quiz_instance = {
-        "question_latex": exercise_result["latex"],
-        "options": options,
-        "solution_steps": template.get("solution_steps", []),
-        "correct_answer": template.get("correct_answer", ""),
-        "week_id": "week01",
-        "is_dynamic": True,  # Marca que es generado dinámicamente
-        "source": exercise_result["provider"],
-        "seed_id": None,
-        "origin_label": {
-            "gemini": "Ge",
-            "deepseek": "De",
-            "openai": "Op",
-            "local": "Lo"  # For fallback/local exercises
-        }.get(exercise_result["provider"], "Un")  # Unknown if not found
-    }
-
-    return quiz_instance
+    # Marcas auxiliares (no rompen el template)
+    quiz_obj["week_id"] = "week01"
+    quiz_obj["is_dynamic"] = True
+    quiz_obj["source"] = "llm"
+    return quiz_obj
 
 
 def is_llm_available() -> bool:
@@ -2485,10 +2439,10 @@ def is_llm_available() -> bool:
         True si se puede generar ejercicios dinámicos, False si debe usar seeds
     """
     try:
-        # Importar función de verificación del generador LLM
-        from .llm_generator import _get_gemini_model
-        model = _get_gemini_model()
-        return model is not None
+        # Verificar configuración local sin llamadas a red
+        from .llm_generator import is_any_llm_configured
+        return bool(is_any_llm_configured())
+
     except Exception:
         return False
 
@@ -2513,14 +2467,29 @@ def choose_exercise_origin() -> str:
 def get_another_question(current_question_latex: str) -> Dict[str, Any]:
     """
     Genera otro ejercicio dinámico basado en el ejercicio actual.
+    Si no hay LLM disponible, genera un ejercicio seed.
 
     Args:
         current_question_latex: LaTeX del ejercicio actual
 
     Returns:
-        Dict con nuevo ejercicio generado dinámicamente
+        Dict con nuevo ejercicio generado dinámicamente o seed
     """
-    return generate_dynamic_question(current_question_latex)
+    # Intentar generar ejercicio dinámico
+    dynamic_question = generate_dynamic_question(current_question_latex)
+
+    # Si la generación LLM falló, fallback a seed
+    if dynamic_question is None:
+        # Generar ejercicio seed aleatorio (excluyendo el actual si es seed)
+        quiz_templates = get_quiz_templates_for_week("week01")
+        # Filtrar templates que no coincidan con el ejercicio actual
+        available_templates = [t for t in quiz_templates if t["question_latex"] != current_question_latex]
+        if not available_templates:
+            available_templates = quiz_templates  # Si todos coinciden, usar cualquiera
+        template = random.choice(available_templates).copy()
+        return _build_quiz_instance_from_template(template)
+
+    return dynamic_question
 
 
 def get_random_question(use_dynamic: bool = False, base_question: str = None) -> Dict[str, Any]:
@@ -2541,7 +2510,7 @@ def get_random_question(use_dynamic: bool = False, base_question: str = None) ->
     # Switch pedagógico: decidir origen del ejercicio
     origin = choose_exercise_origin()
 
-    # Si el switch elige "llm", generar dinámicamente
+    # Si el switch elige "llm", intentar generar dinámicamente
     if origin == "llm":
         # Obtener un template seed aleatorio como base para el LLM
         quiz_templates = get_quiz_templates_for_week("week01")
@@ -2549,13 +2518,30 @@ def get_random_question(use_dynamic: bool = False, base_question: str = None) ->
         base_question_latex = base_template["question_latex"]
 
         # Generar ejercicio dinámico usando el template como base
-        return generate_dynamic_question(base_question_latex)
+        dynamic_question = generate_dynamic_question(base_question_latex)
 
-    # Origen "seed": usar templates predefinidos
+        # Si la generación LLM falló, fallback silencioso a seed
+        if dynamic_question is not None:
+            return dynamic_question
+        # Falló LLM - continuar con lógica seed
+
+    # Origen "seed" o fallback por falla LLM: usar templates predefinidos
     quiz_templates = get_quiz_templates_for_week("week01")
+    template = random.choice(quiz_templates)
+    return _build_quiz_instance_from_template(template)
 
-    # Seleccionar plantilla aleatoria
-    template = random.choice(quiz_templates).copy()
+
+def _build_quiz_instance_from_template(template: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Construye una instancia del quiz a partir de un template seed.
+
+    Args:
+        template: Template del ejercicio seed
+
+    Returns:
+        Dict con la instancia completa del quiz
+    """
+    template = template.copy()
 
     # Construir opciones con identificadores únicos
     options = []
@@ -2594,7 +2580,7 @@ def get_random_question(use_dynamic: bool = False, base_question: str = None) ->
         "options": options,
         "solution_steps": template.get("solution_steps", []),
         "correct_answer": template.get("correct_answer", ""),
-        "week_id": "week01",  # Metadata para identificar la semana
+        "week_id": "week01",
         "source": template.get("source"),
         "seed_id": template.get("seed_id"),
         "origin_label": template.get("origin_label")
