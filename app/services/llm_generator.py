@@ -19,7 +19,7 @@ from typing import Any, Dict, Optional
 logger = logging.getLogger(__name__)
 
 # ======================================================
-# CONFIGURACIÓN EXPLÍCITA (NO MAGIA)
+# CONFIGURACIÓN EXPLÍCITA
 # ======================================================
 
 ENABLE_GEMINI   = True
