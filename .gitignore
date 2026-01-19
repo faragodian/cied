@@ -192,3 +192,12 @@ cloudflared.log
 gunicorn.conf.py
 nginx.conf
 
+
+# LaTeX compiled files
+*.aux
+*.out
+*.pdf
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
