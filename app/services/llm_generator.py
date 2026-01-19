@@ -109,6 +109,7 @@ Reglas para options:
 - Las 3 opciones incorrectas deben ser plausibles y distintas entre sí.
 - Para cada opción incorrecta:
   - "error_id" DEBE ser uno de: {WEEK01_ALLOWED_ERROR_IDS}
+  - Los 3 error_id deben ser DISTINTOS entre sí (no repetir error_id).
   - "wrong_steps" debe explicar el error cometido (3 a 7 pasos).
   - "error_highlight" debe resumir el error en una frase corta.
 
@@ -376,6 +377,10 @@ def generate_week01_quiz_instance() -> Optional[Dict[str, Any]]:
                         raise ValueError("wrong_steps inválido")
                     if not isinstance(o.get("error_highlight"), str) or not o["error_highlight"].strip():
                         raise ValueError("error_highlight inválido")
+            # Enforce: no repetir error_id entre incorrectas
+            wrong_ids = [o.get("error_id") for o in options if o.get("is_correct") is False]
+            if len(wrong_ids) != len(set(wrong_ids)):
+                raise ValueError("error_id repetido en opciones incorrectas")
         except Exception:
             logger.exception("Quiz JSON inválido (provider=%s)", provider)
             continue
