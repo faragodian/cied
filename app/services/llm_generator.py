@@ -14,6 +14,7 @@ import os
 import json
 import re
 import logging
+import copy
 from typing import Any, Dict, Optional
 
 logger = logging.getLogger(__name__)
@@ -23,7 +24,7 @@ logger = logging.getLogger(__name__)
 # ======================================================
 
 ENABLE_GEMINI   = True
-ENABLE_DEEPSEEK = False
+ENABLE_DEEPSEEK = True
 ENABLE_OPENROUTER = True
 ENABLE_OPENAI   = True
 
@@ -71,7 +72,7 @@ Debe ser coherente: enunciado ↔ respuesta correcta ↔ distractores ↔ pasos 
 
 Restricciones:
 - Nivel: Cálculo universitario
-- No uses integrales imposibles; debe poder resolverse con integración por partes
+- No usa integrales imposibles; debe poder resolverse con integración por partes
 - Usa LaTeX válido (sin delimitadores $$ ni \\[ \\]; solo el contenido)
 - Incluye constante +C si es integral indefinida
 - Si es definida, entrega un valor numérico/expresión final sin +C
@@ -115,6 +116,96 @@ Reglas para options:
 
 Devuelve SOLO el JSON.
 """.strip()
+
+# ======================================================
+# FUNCIONES AUXILIARES
+# ======================================================
+
+def _normalize_llm_options(obj: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Normaliza las opciones generadas por LLM para que tengan la estructura
+    esperada por el sistema y puedan ser mezcladas correctamente.
+    
+    Args:
+        obj: Objeto JSON generado por el LLM
+        
+    Returns:
+        Objeto normalizado
+    """
+    obj = copy.deepcopy(obj)
+    
+    # Paso 1: Eliminar option_id fijos (A, B, C, D) y reemplazar con temporales
+    options = obj.get("options", [])
+    
+    # Identificar la opción correcta
+    correct_option = None
+    incorrect_options = []
+    
+    for option in options:
+        if option.get("is_correct") is True:
+            correct_option = option
+        else:
+            incorrect_options.append(option)
+    
+    # Paso 2: Crear nueva estructura sin option_id fijos
+    # La opción correcta tendrá option_id "correct" temporal
+    if correct_option:
+        correct_option["option_id"] = "correct"
+        correct_option["solution_steps"] = obj.get("solution_steps", [])
+        correct_option["final_answer"] = obj.get("correct_answer", "")
+    
+    # Las opciones incorrectas tendrán option_id "incorrect_0", "incorrect_1", etc.
+    for i, option in enumerate(incorrect_options):
+        option["option_id"] = f"incorrect_{i}"
+        # Asegurar que tengan los campos requeridos
+        if "error_id" not in option:
+            option["error_id"] = ""
+        if "wrong_steps" not in option:
+            option["wrong_steps"] = []
+        if "error_highlight" not in option:
+            option["error_highlight"] = ""
+    
+    # Paso 3: Reconstruir la lista de opciones (sin mezclar aún)
+    normalized_options = []
+    if correct_option:
+        normalized_options.append(correct_option)
+    normalized_options.extend(incorrect_options)
+    
+    # Actualizar el objeto
+    obj["options"] = normalized_options
+    obj["source"] = "llm"
+    obj["week_id"] = "week01"
+    obj["is_dynamic"] = True
+    
+    return obj
+
+
+def _extract_first_json_object(text: str) -> Optional[Dict[str, Any]]:
+    """
+    Extrae el primer objeto JSON válido encontrado en un string.
+    Útil porque algunos modelos envuelven el JSON con texto extra.
+    """
+    if not text:
+        return None
+    # Intentar parse directo primero
+    try:
+        obj = json.loads(text)
+        if isinstance(obj, dict):
+            return obj
+    except Exception:
+        pass
+
+    # Buscar el primer bloque {...} de forma aproximada
+    m = re.search(r"\{[\s\S]*\}", text)
+    if not m:
+        return None
+    candidate = m.group(0)
+    try:
+        obj = json.loads(candidate)
+        return obj if isinstance(obj, dict) else None
+    except Exception:
+        return None
+
 
 # ======================================================
 # LLM IMPLEMENTATIONS
@@ -277,33 +368,6 @@ def _generate_with_openrouter(prompt: str):
         return None
 
 
-def _extract_first_json_object(text: str) -> Optional[Dict[str, Any]]:
-    """
-    Extrae el primer objeto JSON válido encontrado en un string.
-    Útil porque algunos modelos envuelven el JSON con texto extra.
-    """
-    if not text:
-        return None
-    # Intentar parse directo primero
-    try:
-        obj = json.loads(text)
-        if isinstance(obj, dict):
-            return obj
-    except Exception:
-        pass
-
-    # Buscar el primer bloque {...} de forma aproximada
-    m = re.search(r"\{[\s\S]*\}", text)
-    if not m:
-        return None
-    candidate = m.group(0)
-    try:
-        obj = json.loads(candidate)
-        return obj if isinstance(obj, dict) else None
-    except Exception:
-        return None
-
-
 def is_any_llm_configured() -> bool:
     """
     Verifica configuración local (flags + API keys) sin hacer llamadas a red.
@@ -388,6 +452,10 @@ def generate_week01_quiz_instance() -> Optional[Dict[str, Any]]:
         obj["origin_label"] = "LLM"
         obj["seed_id"] = None
         logger.info("Quiz dinámico generado por %s", provider)
+        
+        # NORMALIZAR OPCIONES PARA PODER MEZCLARLAS DESPUÉS
+        obj = _normalize_llm_options(obj)
+        
         return obj
 
     return None
@@ -436,6 +504,3 @@ def generate_week01_exercise():
     # Ninguna LLM funcionó → Seed
     logger.info("Ninguna LLM disponible, usando Seed")
     return None
-
-
-
