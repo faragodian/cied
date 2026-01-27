@@ -1,0 +1,46 @@
+{
+  "id": "fracciones-parciales-integracion-error",
+  "curso": "Cálculo Integral",
+  "tema": "Fracciones parciales",
+  "subtema": "Integración de términos individuales",
+  "titulo": "Error al integrar términos individuales en fracciones parciales",
+  "descripcion_corta": "Después de descomponer correctamente en fracciones parciales, se comete un error al integrar cada término por separado.",
+  "prerrequisitos": ["Fracciones parciales", "Integración básica", "Reglas de integración"],
+  "sintomas": ["Resultado incorrecto en la integral", "Error en logaritmos naturales", "Problemas con integrales de potencias negativas", "Coeficientes mal aplicados"],
+  "patron_error": {
+    "latex": "\\int \\left( \\frac{2}{x-1} + \\frac{3}{x+2} \\right) dx = 2 \\ln|x-1| + 3 \\ln|x+2| \\quad (\\text{correcto})",
+    "explicacion": "Error común: olvidar la constante de integración en cada término, o integrar incorrectamente"
+  },
+  "deteccion": {
+    "tipo": "Verificación por diferenciación",
+    "reglas": ["Cada término debe integrarse correctamente", "Mantener coeficientes en la integración", "No olvidar constantes de integración parciales"],
+    "criterio": "Derivar el resultado debe dar la expresión descompuesta original"
+  },
+  "remediacion": {
+    "estrategia": "Integrar cada fracción parcial por separado con cuidado",
+    "pistas": ["∫ A/(x-a) dx = A ln|x-a| + C", "∫ A/(x-a)^n dx = A ∫ (x-a)^{-n} dx = A/(1-n) (x-a)^{1-n} + C para n≠1", "Verificar cada integración derivando"],
+    "mini_leccion": {
+      "latex": "\\int \\frac{A}{x-a} dx = A \\ln|x-a| + C, \\quad \\int \\frac{A}{(x-a)^2} dx = -\\frac{A}{x-a} + C",
+      "nota": "Recuerda: la integral de 1/(x-a) es ln|x-a|, no ln(x-a)"
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Integra correctamente: ∫ [1/(x-1) + 2/(x+1)^2] dx",
+      "solucion": "∫ 1/(x-1) dx = ln|x-1|, ∫ 2/(x+1)^2 dx = 2 ∫ (x+1)^{-2} dx = 2 * (-1)/(x+1) = -2/(x+1). Resultado: ln|x-1| - 2/(x+1) + C",
+      "dificultad": "baja"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Derivación",
+    "sugerido": "Derivar la respuesta y verificar que se obtiene 1/(x-1) + 2/(x+1)^2",
+    "criterio": "d/dx[ln|x-1| - 2/(x+1)] = 1/(x-1) - 2*(-1)/(x+1)^2 = 1/(x-1) + 2/(x+1)^2"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema CIED",
+    "creado": "2024-01-20",
+    "actualizado": "2024-01-20",
+    "tags": ["fracciones parciales", "integración", "reglas básicas"]
+  }
+}

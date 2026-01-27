@@ -1,0 +1,46 @@
+{
+  "id": "fracciones-parciales-descomposicion-lineal",
+  "curso": "Cálculo Integral",
+  "tema": "Fracciones parciales",
+  "subtema": "Descomposición con factores lineales",
+  "titulo": "Error en la descomposición de fracciones parciales con factores lineales",
+  "descripcion_corta": "Al descomponer una función racional en fracciones parciales, se comete error algebraico en la determinación de los coeficientes.",
+  "prerrequisitos": ["Fracciones parciales", "Sistemas de ecuaciones lineales"],
+  "sintomas": ["Coeficientes incorrectos en numeradores", "Resultado no verifica la descomposición original", "Integral errónea"],
+  "patron_error": {
+    "latex": "\\frac{x+1}{(x-1)(x+2)} = \\frac{A}{x-1} + \\frac{B}{x+2} \\implies A = 2, B = -1 \\quad (\\text{incorrecto})",
+    "explicacion": "Error en la resolución del sistema para encontrar A y B"
+  },
+  "deteccion": {
+    "tipo": "Verificación algebraica",
+    "reglas": ["Resolver sistema A(x+2) + B(x-1) = x+1", "Verificar que suma dé el numerador original"],
+    "criterio": "La descomposición debe reconstruir exactamente la fracción original"
+  },
+  "remediacion": {
+    "estrategia": "Resolver correctamente el sistema de ecuaciones",
+    "pistas": ["Para A: hacer x = 1, B: hacer x = -2", "Método alternativo: coeficientes indeterminados", "Verificar suma: A/(x-1) + B/(x+2) = (x+1)/((x-1)(x+2))"],
+    "mini_leccion": {
+      "latex": "\\frac{x+1}{(x-1)(x+2)} = \\frac{3/3}{x-1} + \\frac{-2/3}{x+2}",
+      "nota": "A = 1, B = 0 para este caso simple"
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Descompón: (2x-3)/((x-1)(x+1))",
+      "solucion": "2x-3 = A(x+1) + B(x-1), x=1→A=1, x=-1→B=2, resultado: 1/(x-1) + 2/(x+1)",
+      "dificultad": "baja"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Reconstrucción",
+    "sugerido": "Verificar que 1/(x-1) + 2/(x+1) = (2x-3)/((x-1)(x+1))",
+    "criterio": "La suma debe igualar la fracción original"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema CIED",
+    "creado": "2024-01-20",
+    "actualizado": "2024-01-20",
+    "tags": ["fracciones parciales", "descomposición", "factores lineales"]
+  }
+}

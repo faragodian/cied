@@ -1,0 +1,83 @@
+{
+  "id": "sustitucion-trigonometrica-sin-regreso",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Sustitución trigonométrica",
+  "titulo": "Olvido de regresar a la variable original en sustitución trigonométrica",
+  "descripcion_corta": "Después de resolver la integral en términos de θ, se olvida expresar la respuesta final en términos de la variable original x.",
+  "prerrequisitos": [
+    "Proceso completo de sustitución trigonométrica",
+    "Expresión de sen θ, cos θ, tan θ en términos de x",
+    "Uso correcto de triángulos de referencia",
+    "Simplificación de la respuesta final"
+  ],
+  "sintomas": [
+    "La respuesta está en términos de θ en lugar de x",
+    "Aparecen funciones trigonométricas inversas sin relación con x",
+    "El resultado no se puede evaluar numéricamente para valores de x",
+    "La respuesta parece correcta algebraicamente pero no está completa"
+  ],
+  "patron_error": {
+    "latex": "\\int \\frac{dx}{\\sqrt{1 - x^{2}}} = \\int d\\theta = \\theta + C = \\arcsin(x) + C \\quad (\\text{correcto)}\\\\ \\text{Pero dejar como: } \\theta + C \\quad (\\text{incorrecto)}",
+    "explicacion": "Se resuelve la integral transformada pero se olvida que θ = arc sen(x), dejando la respuesta en términos de la variable auxiliar en lugar de la variable original."
+  },
+  "deteccion": {
+    "tipo": "Verificación de la variable en la respuesta final",
+    "reglas": [
+      "Comprobar que la respuesta final esté en términos de x",
+      "Buscar la presencia de θ o otras variables auxiliares",
+      "Verificar que se pueda evaluar la respuesta para valores específicos de x",
+      "Contar que falte la expresión trigonométrica inversa"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Después de integrar en términos de θ, expresar sen θ, cos θ, tan θ en términos de x usando la sustitución original, y simplificar",
+    "pistas": [
+      "Recuerda la sustitución que usaste (x = a sen θ, etc.)",
+      "Expresa las funciones trigonométricas en términos de x",
+      "Si usaste un triángulo de referencia, revísalo",
+      "La respuesta final debe estar solo en términos de x"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Proceso completo de sustitución trigonométrica:}\\\\ 1.\\ \\text{Elegir sustitución: } x = a \\sin \\theta\\\\ 2.\\ \\text{Calcular } dx = a \\cos \\theta \\, d\\theta\\\\ 3.\\ \\text{Integrar en términos de } \\theta\\\\ 4.\\ \\text{Regresar a } x: \\sin \\theta = \\frac{x}{a}, \\cos \\theta = \\sqrt{1 - \\left(\\frac{x}{a}\\right)^{2}}\\\\ \\text{Ejemplo: } \\int \\frac{dx}{\\sqrt{4 - x^{2}}} = \\arcsin\\left(\\frac{x}{2}\\right) + C",
+      "nota": "La sustitución trigonométrica tiene 4 pasos: elegir, transformar, integrar, regresar. Olvidar el paso 4 deja la respuesta en términos de θ en lugar de x."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Completa la sustitución trigonométrica: ∫ dx / √(9 − x²) = arc sen(x/3) + C",
+      "solucion": "Sustitución: x = 3 sen θ, dx = 3 cos θ dθ. Integral: ∫ dθ = θ + C = arc sen(x/3) + C. Ya está en términos de x.",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Si después de ∫ dx / √(1 − x²) = θ + C, ¿cuál es el paso faltante?",
+      "solucion": "Falta expresar θ en términos de x. Como x = sen θ, entonces θ = arc sen x. Respuesta completa: arc sen x + C.",
+      "dificultad": "media"
+    },
+    {
+      "enunciado": "¿Por qué ∫ dx / √(x² − 4) = arc sec(x/2) + C está completo?",
+      "solucion": "Sustitución: x = 2 sec θ. Después de integrar: θ + C = arc sec(x/2) + C. La función secante inversa ya expresa θ en términos de x.",
+      "dificultad": "alta"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Sustitución numérica",
+    "sugerido": "Evalúa la respuesta final para un valor específico de x",
+    "criterio": "La respuesta debe poder evaluarse numéricamente sin definir θ"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "sustitución trigonométrica",
+      "regreso a variable original",
+      "arc sen",
+      "arc tan",
+      "arc sec",
+      "error procedimental",
+      "semana 1"
+    ]
+  }
+}

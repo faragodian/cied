@@ -1,0 +1,46 @@
+{
+  "id": "sustitucion-trigonometrica-no-retorno",
+  "curso": "Cálculo Integral",
+  "tema": "Sustitución trigonométrica",
+  "subtema": "Regreso a la variable original",
+  "titulo": "Error: no regresar a la variable original después de la sustitución",
+  "descripcion_corta": "Después de resolver la integral en términos de θ, se olvida expresar el resultado final en términos de x.",
+  "prerrequisitos": ["Sustitución trigonométrica", "Identidades trigonométricas"],
+  "sintomas": ["Respuesta en términos de θ en lugar de x", "Expresión trigonométrica sin simplificar", "Resultado no verificable"],
+  "patron_error": {
+    "latex": "\\int \\frac{dx}{\\sqrt{a^2 - x^2}} = \\int d\\theta = \\theta + C \\quad (\\text{falta } \\theta = \\arcsin(x/a))",
+    "explicacion": "Se resuelve la integral pero no se regresa a la variable original x"
+  },
+  "deteccion": {
+    "tipo": "Verificación formal",
+    "reglas": ["Después de integrar en θ, usar identidad trigonométrica inversa", "Verificar que respuesta esté en términos de x"],
+    "criterio": "La respuesta final debe ser función de x, no de θ"
+  },
+  "remediacion": {
+    "estrategia": "Recordar completar la sustitución trigonométrica",
+    "pistas": ["Después de ∫ f(θ) dθ = F(θ) + C", "Usar x = a sin θ → θ = arcsin(x/a)", "Expresar F(arcsin(x/a))"],
+    "mini_leccion": {
+      "latex": "\\int d\\theta = \\theta + C = \\arcsin\\left(\\frac{x}{a}\\right) + C",
+      "nota": "Siempre completar el regreso a la variable original"
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Resuelve: ∫ dx/√(9 - x²)",
+      "solucion": "x = 3 sin θ, dx = 3 cos θ dθ, ∫ 3 cos θ dθ / (3 cos θ) = ∫ dθ = θ + C = arcsin(x/3) + C",
+      "dificultad": "baja"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Derivación",
+    "sugerido": "Verificar d/dx[arcsin(x/3)] = 1/√(9 - x²)",
+    "criterio": "La derivada debe coincidir con el integrando original"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema CIED",
+    "creado": "2024-01-20",
+    "actualizado": "2024-01-20",
+    "tags": ["sustitución trigonométrica", "regreso variable", "identidades trigonométricas"]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "id": "integrales-trig-identidad",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Integrales trigonométricas",
+  "titulo": "Uso incorrecto de identidades trigonométricas",
+  "descripcion_corta": "Se aplica una identidad trigonométrica incorrecta o se confunde una identidad con otra similar, llevando a expresiones que no simplifican la integral o dan resultados erróneos.",
+  "prerrequisitos": [
+    "Identidad pitagórica: sen²x + cos²x = 1",
+    "Identidad de tangente: 1 + tan²x = sec²x",
+    "Identidad de cosecante: cot²x + 1 = csc²x",
+    "Identidades dobles: sen 2x = 2 sen x cos x, etc."
+  ],
+  "sintomas": [
+    "La expresión se vuelve más complicada después de aplicar la identidad",
+    "Aparecen funciones trigonométricas que no estaban en el integrando original",
+    "La integral resultante no se puede resolver con técnicas conocidas",
+    "Se obtienen resultados que no satisfacen la verificación"
+  ],
+  "patron_error": {
+    "latex": "\\int \\frac{1}{\\sen x} \\, dx \\implies \\text{(error: usar } 1 + \\tan^{2} x = \\sec^{2} x\\text{)}\\\\ \\text{En lugar de: } \\int \\csc x \\, dx = \\ln |\\csc x - \\cot x| + C",
+    "explicacion": "Se confunde la identidad 1 + tan²x = sec²x con algo relacionado con cosecante. La identidad correcta para ∫csc x dx es usar la identidad csc²x = cot²x + 1, pero aplicada correctamente."
+  },
+  "deteccion": {
+    "tipo": "Verificación de equivalencia trigonométrica",
+    "reglas": [
+      "Comprobar que la nueva expresión es algebraicamente equivalente a la original",
+      "Verificar que no aparecen nuevas funciones trigonométricas no relacionadas",
+      "Contar si la integral se vuelve más simple después de la identidad",
+      "Revisar si la identidad aplicada es realmente necesaria"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Aplicar identidades solo cuando simplifiquen efectivamente la integral, y recordar claramente las identidades fundamentales sin confundirlas",
+    "pistas": [
+      "Recuerda las identidades básicas: sen²x + cos²x = 1, 1 + tan²x = sec²x, cot²x + 1 = csc²x",
+      "No uses una identidad si complica la expresión",
+      "Si aparecen funciones nuevas que no estaban, probablemente usaste la identidad equivocada",
+      "Para integrales de potencias pares, la identidad pitagórica es tu mejor aliada"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Identidades trigonométricas fundamentales:}\\\\ \\sin^{2} x + \\cos^{2} x = 1 \\\\ 1 + \\tan^{2} x = \\sec^{2} x \\\\ \\cot^{2} x + 1 = \\csc^{2} x \\\\ \\text{Para integrales de potencias pares: usar la primera}",
+      "nota": "Cada identidad tiene su contexto específico. La identidad pitagórica es para simplificar sen²x o cos²x. Las identidades de tan/sec y cot/csc son para integrales que involucran esas funciones específicamente."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Calcula ∫sen²x dx usando la identidad correcta",
+      "solucion": "sen²x = (1 - cos 2x)/2. Resultado: (1/2)∫(1 - cos 2x)dx = (1/2)[x - (1/2)sen 2x] + C = (1/2)x - (1/4)sen 2x + C",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Calcula ∫sec⁴x dx usando la identidad de tangente apropiada",
+      "solucion": "sec⁴x = sec²x · sec²x = (1 + tan²x) sec²x. Sea u = tan x, du = sec²x dx. Resultado: ∫(1 + u²) du = u + (1/3)u³ + C = tan x + (1/3)tan³x + C",
+      "dificultad": "media"
+    },
+    {
+      "enunciado": "¿Por qué es incorrecto usar 1 + tan²x = sec²x para integrar ∫csc x dx?",
+      "solucion": "Porque csc x = 1/sen x, no tiene relación directa con tan x o sec x. La identidad correcta es usar la derivada: d/dx[ln|csc x - cot x|] = csc x",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Sustitución trigonométrica",
+    "sugerido": "Evalúa numéricamente tu resultado y el integrando original en varios valores de x",
+    "criterio": "Los valores deben coincidir para todos los x en el dominio de definición"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integrales trigonométricas",
+      "identidades trigonométricas",
+      "sen²x + cos²x = 1",
+      "1 + tan²x = sec²x",
+      "error conceptual",
+      "identidades pitagóricas",
+      "semana 2"
+    ]
+  }
+}

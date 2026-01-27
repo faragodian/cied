@@ -1,0 +1,46 @@
+{
+  "id": "fracciones-parciales-denominador-incompleto",
+  "curso": "Cálculo Integral",
+  "tema": "Fracciones parciales",
+  "subtema": "Factorización completa del denominador",
+  "titulo": "Error por no factorizar completamente el denominador",
+  "descripcion_corta": "Se intenta aplicar fracciones parciales sin factorizar completamente el denominador polinomial.",
+  "prerrequisitos": ["Factorización polinomial", "Fracciones parciales", "Teorema fundamental del álgebra"],
+  "sintomas": ["Coeficientes imposibles de encontrar", "Sistema de ecuaciones inconsistente", "Resultado algebraicamente incorrecto", "No se puede completar la descomposición"],
+  "patron_error": {
+    "latex": "\\frac{x^2 + 3x + 1}{x^3 + 3x^2 + 2x} = \\frac{A}{x} + \\frac{B}{x+1} + \\frac{C}{x+2} \\quad (\\text{incorrecto, falta factorizar})",
+    "explicacion": "El denominador x^3 + 3x^2 + 2x = x(x^2 + 3x + 2) = x(x+1)(x+2), pero se intentó descomponer sin factorizar x"
+  },
+  "deteccion": {
+    "tipo": "Análisis del denominador",
+    "reglas": ["Factorizar completamente el denominador", "Identificar factores lineales y cuadráticos", "Contar multiplicidad de raíces"],
+    "criterio": "El grado del numerador debe ser menor que el grado de cada factor irreducible"
+  },
+  "remediacion": {
+    "estrategia": "Factorizar completamente el denominador antes de descomponer",
+    "pistas": ["Usar regla de Ruffini para encontrar raíces", "Para polinomios cúbicos: probar factores lineales primero", "Recordar que x^3 + a x^2 + b x + c = (x+r)(x^2 + p x + q)"],
+    "mini_leccion": {
+      "latex": "x^3 + 3x^2 + 2x = x(x^2 + 3x + 2) = x(x+1)(x+2)",
+      "nota": "Siempre factorizar x cuando aparezca como factor común en el denominador"
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Factoriza completamente: x^3 + x^2 - x - 1",
+      "solucion": "Por regla de Ruffini: x=1: 1+1-1-1=0, así (x-1)(x^2 + 2x + 1) = (x-1)(x+1)^2",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Expansión",
+    "sugerido": "Multiplicar los factores para verificar que dan el polinomio original",
+    "criterio": "La factorización debe ser completa y correcta"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema CIED",
+    "creado": "2024-01-20",
+    "actualizado": "2024-01-20",
+    "tags": ["fracciones parciales", "factorización", "álgebra polinomial"]
+  }
+}

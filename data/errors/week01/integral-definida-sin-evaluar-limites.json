@@ -1,0 +1,76 @@
+{
+  "id": "integral-definida-sin-evaluar-limites",
+  "curso": "MATE-1214",
+  "tema": "Integrales definidas",
+  "subtema": "Teorema Fundamental del Cálculo",
+  "titulo": "Olvido de evaluar la antiderivada en los límites de integración",
+  "descripcion_corta": "Se calcula correctamente la antiderivada pero se olvida aplicar el Teorema Fundamental del Cálculo evaluando F(b) − F(a).",
+  "prerrequisitos": [
+    "Teorema Fundamental del Cálculo: ∫_a^b f(x) dx = F(b) − F(a)",
+    "Diferencia entre integrales indefinidas y definidas",
+    "Cálculo de antiderivadas"
+  ],
+  "sintomas": [
+    "El resultado es una expresión con C (constante de integración)",
+    "Aparece la antiderivada sin evaluar en los límites",
+    "El resultado tiene la forma de una integral indefinida",
+    "Se obtiene una función en lugar de un número"
+  ],
+  "patron_error": {
+    "latex": "\\int_{0}^{1} 2x \\, dx = \\int 2x \\, dx = x^{2} + C",
+    "explicacion": "Se calcula la antiderivada pero no se evalúa en los límites de integración, dejando el resultado como una integral indefinida en lugar del valor numérico."
+  },
+  "deteccion": {
+    "tipo": "Verificación del tipo de resultado",
+    "reglas": [
+      "Las integrales definidas deben dar un número (o expresión numérica)",
+      "Buscar la presencia de constantes de integración (+ C) en el resultado",
+      "Verificar que se aplique la notación [F(x)]_a^b",
+      "Contar que falte la evaluación F(b) − F(a)"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Recordar que las integrales definidas requieren evaluación de la antiderivada en los límites superior e inferior",
+    "pistas": [
+      "Después de encontrar la antiderivada F(x), evalúa F(b) − F(a)",
+      "La notación [F(x)]_a^b significa F(b) − F(a)",
+      "Las integrales definidas dan números, no funciones con C",
+      "Si el resultado tiene + C, faltó evaluar los límites"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Integral indefinida: } \\int f(x) \\, dx = F(x) + C\\\\ \\text{Integral definida: } \\int_{a}^{b} f(x) \\, dx = [F(x)]_{a}^{b} = F(b) - F(a)\\\\ \\text{Ejemplo: } \\int_{0}^{2} x \\, dx = \\left[\\frac{x^{2}}{2}\\right]_{0}^{2} = \\frac{4}{2} - \\frac{0}{2} = 2\\\\ \\text{No solo } \\frac{x^{2}}{2} + C",
+      "nota": "La integral definida es un número específico, no una familia de funciones. Siempre evalúa F(b) − F(a) después de encontrar la antiderivada."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Calcula ∫_{-1}^{1} x³ dx evaluando correctamente los límites",
+      "solucion": "Antiderivada: ∫x³ dx = (1/4)x⁴ + C. Evaluación: [(1/4)(1)⁴] - [(1/4)(-1)⁴] = (1/4)(1) - (1/4)(1) = 1/4 - 1/4 = 0",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "¿Cuál es la diferencia entre ∫ sen x dx y ∫_{0}^{π} sen x dx?",
+      "solucion": "∫ sen x dx = -cos x + C (indefinida, familia de funciones). ∫_{0}^{π} sen x dx = [-cos x]_{0}^{π} = -cos(π) - (-cos(0)) = -(-1) - (-1) = 1 + 1 = 2 (definida, número específico).",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Verificación dimensional",
+    "sugerido": "Las integrales definidas deben dar valores numéricos, no expresiones con variables o constantes de integración.",
+    "criterio": "El resultado debe ser un número o expresión numérica sin variables libres"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integrales definidas",
+      "teorema fundamental del cálculo",
+      "evaluación de límites",
+      "olvido de evaluación",
+      "error procedimental",
+      "semana 1"
+    ]
+  }
+}

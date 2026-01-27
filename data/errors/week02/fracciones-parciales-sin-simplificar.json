@@ -1,0 +1,46 @@
+{
+  "id": "fracciones-parciales-sin-simplificar",
+  "curso": "Cálculo Integral",
+  "tema": "Fracciones parciales",
+  "subtema": "Simplificación previa",
+  "titulo": "Error: integrar fracción racional sin simplificar previamente",
+  "descripcion_corta": "Se intenta descomponer en fracciones parciales sin simplificar primero el numerador y denominador.",
+  "prerrequisitos": ["Fracciones parciales", "Simplificación algebraica"],
+  "sintomas": ["Descomposición innecesariamente compleja", "Coeficientes fraccionarios difíciles", "Resultado algebraico incorrecto"],
+  "patron_error": {
+    "latex": "\\int \\frac{x^2 + 3x + 1}{x^2 + 2x - 3} dx \\implies \\text{descomponer sin simplificar} \\quad (x^2 + 2x - 3 = (x+3)(x-1))",
+    "explicacion": "No se simplifica primero el numerador con el denominador"
+  },
+  "deteccion": {
+    "tipo": "Análisis algebraico",
+    "reglas": ["Verificar grado del numerador vs denominador", "Simplificar fracción antes de descomponer", "Buscar factores comunes"],
+    "criterio": "Si grado(numerador) ≥ grado(denominador), hacer división polinomial primero"
+  },
+  "remediacion": {
+    "estrategia": "Simplificar la fracción racional antes de aplicar fracciones parciales",
+    "pistas": ["Hacer división polinomial si grado ≥", "Factorizar completamente numerador y denominador", "Simplificar factores comunes"],
+    "mini_leccion": {
+      "latex": "\\frac{x^2 + 3x + 1}{x^2 + 2x - 3} = 1 + \\frac{5x + 4}{x^2 + 2x - 3}",
+      "nota": "Siempre simplificar primero para reducir complejidad"
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Simplifica: ∫ (x² + 3x + 1)/(x² + 2x - 3) dx",
+      "solucion": "División: x²+2x-3 divide x²+3x+1 = 1 con resto 5x+4, así: 1 + ∫ (5x+4)/(x²+2x-3) dx",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "División polinomial",
+    "sugerido": "Verificar que numerador = cociente × denominador + resto",
+    "criterio": "El resto debe tener grado menor que el denominador"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema CIED",
+    "creado": "2024-01-20",
+    "actualizado": "2024-01-20",
+    "tags": ["fracciones parciales", "simplificación", "división polinomial"]
+  }
+}

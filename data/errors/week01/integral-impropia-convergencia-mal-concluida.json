@@ -1,0 +1,88 @@
+{
+  "id": "integral-impropia-convergencia-mal-concluida",
+  "curso": "MATE-1214",
+  "tema": "Integrales impropias",
+  "subtema": "Criterios de convergencia",
+  "titulo": "Conclusión errónea sobre convergencia o divergencia",
+  "descripcion_corta": "Después de calcular correctamente el límite de una integral impropia, se concluye incorrectamente si converge o diverge, o se asigna un valor finito cuando debería divergir (o viceversa).",
+  "prerrequisitos": [
+    "Definición de convergencia: ∫_a^∞ f(x) dx converge si lim_{b→∞} ∫_a^b f(x) dx existe y es finito",
+    "Concepto de divergencia: si el límite es ∞ o -∞, la integral diverge",
+    "Diferencia entre límites que existen y límites que divergen"
+  ],
+  "sintomas": [
+    "Se dice que converge cuando el límite es ∞",
+    "Se dice que diverge cuando el límite existe y es finito",
+    "Confusión entre el límite divergiendo y la integral divergiendo",
+    "Interpretación incorrecta del comportamiento del límite"
+  ],
+  "patron_error": {
+    "latex": "\\int_{1}^{\\infty} \\frac{1}{x} \\, dx = \\lim_{b \\to \\infty} \\int_{1}^{b} \\frac{1}{x} \\, dx = \\lim_{b \\to \\infty} [\\ln x]_{1}^{b} = \\lim_{b \\to \\infty} (\\ln b - \\ln 1) = \\lim_{b \\to \\infty} \\ln b = \\infty \\\\ \\text{Conclusión errónea: converge a } \\infty",
+    "explicacion": "Se calcula correctamente que el límite es ∞, pero se concluye que 'converge a ∞' cuando en realidad diverge porque ∞ no es un número finito."
+  },
+  "deteccion": {
+    "tipo": "Análisis del resultado del límite",
+    "reglas": [
+      "Si lim = L (número finito), entonces converge a L",
+      "Si lim = ∞ o lim = -∞, entonces diverge",
+      "Si lim no existe (oscila), entonces diverge",
+      "Verificar que el resultado tenga sentido matemático"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Recordar que convergencia requiere un límite finito; cualquier otro resultado significa divergencia",
+    "pistas": [
+      "Converge = límite existe y es un número real finito",
+      "Diverge = límite es ∞, -∞, o no existe",
+      "∞ no es un número finito, así que 'converge a ∞' es incorrecto",
+      "Si el límite diverge, la integral diverge",
+      "Si el límite oscila, la integral diverge"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Criterios de convergencia para integrales impropias:} \\\\ \\int_{a}^{\\infty} f(x) \\, dx \\text{ converge si } \\lim_{b \\to \\infty} \\int_{a}^{b} f(x) \\, dx = L \\in \\mathbb{R} \\\\ \\int_{a}^{\\infty} f(x) \\, dx \\text{ diverge si } \\lim_{b \\to \\infty} \\int_{a}^{b} f(x) \\, dx = \\pm \\infty \\text{ o no existe} \\\\ \\text{Ejemplos:} \\\\ \\int_{1}^{\\infty} \\frac{1}{x^{2}} \\, dx = \\lim_{b \\to \\infty} [-\\frac{1}{x}]_{1}^{b} = \\lim_{b \\to \\infty} (-\\frac{1}{b} + 1) = 1 \\quad (\\text{converge}) \\\\ \\int_{1}^{\\infty} \\frac{1}{x} \\, dx = \\lim_{b \\to \\infty} [\\ln x]_{1}^{b} = \\lim_{b \\to \\infty} \\ln b = \\infty \\quad (\\text{diverge})",
+      "nota": "La convergencia requiere un límite finito. Si el límite es ∞, -∞, o no existe, la integral diverge. No existe 'convergencia a infinito'."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Evalúa ∫₁^∞ dx/x². ¿Converge o diverge? Si converge, ¿a qué valor?",
+      "solucion": "∫₁^∞ dx/x² = lim_{b→∞} ∫₁^b x^{-2} dx = lim_{b→∞} [-1/x]_1^b = lim_{b→∞} (-1/b + 1) = 0 + 1 = 1. Converge al valor 1.",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Evalúa ∫₁^∞ dx/x. ¿Converge o diverge?",
+      "solucion": "∫₁^∞ dx/x = lim_{b→∞} ∫₁^b x^{-1} dx = lim_{b→∞} [ln x]_1^b = lim_{b→∞} (ln b - 0) = ∞. Diverge (límite es ∞, no un número finito).",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "¿Es correcto decir que ∫₁^∞ dx/x 'converge a ∞'?",
+      "solucion": "No. El límite es ∞, lo cual significa que diverge. La convergencia requiere un límite finito. 'Converge a ∞' es una contradicción en términos.",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Evalúa ∫₀¹ dx/√x. ¿Converge o diverge?",
+      "solucion": "∫₀¹ dx/√x = lim_{a→0⁺} ∫_a¹ x^{-1/2} dx = lim_{a→0⁺} [2x^{1/2}]_a¹ = lim_{a→0⁺} (2 - 2√a) = 2 - 0 = 2. Converge al valor 2.",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Comparación con series conocidas y criterios de comparación",
+    "sugerido": "Para límites infinitos: usar criterio de comparación ∫ f(x) dx vs ∫ 1/x^p dx. Para singularidades: analizar comportamiento local.",
+    "criterio": "La integral converge si y solo si el límite existe y es finito"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2025-01-08",
+    "actualizado": "2025-01-08",
+    "tags": [
+      "integrales impropias",
+      "convergencia",
+      "divergencia",
+      "criterios de convergencia",
+      "límites infinitos",
+      "semana 1",
+      "conceptual"
+    ]
+  }
+}

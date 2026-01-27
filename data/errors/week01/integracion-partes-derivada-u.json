@@ -1,0 +1,78 @@
+{
+  "id": "integracion-partes-derivada-u",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Integración por partes",
+  "titulo": "Olvidar derivar correctamente u en aplicaciones múltiples de integración por partes",
+  "descripcion_corta": "En aplicaciones sucesivas de integración por partes, se olvida actualizar correctamente la derivada de u en cada paso, llevando a errores algebraicos acumulativos.",
+  "prerrequisitos": [
+    "Fórmula de integración por partes: ∫u dv = uv - ∫v du",
+    "Aplicación reiterada de la técnica cuando ∫v du requiere nueva integración por partes",
+    "Entendimiento de que u cambia en cada aplicación"
+  ],
+  "sintomas": [
+    "La integral parece resolverse pero la verificación falla",
+    "Aparecen términos inconsistentes en la solución final",
+    "Los coeficientes no coinciden con la derivación paso a paso",
+    "La solución parece correcta algebraicamente pero falla numéricamente"
+  ],
+  "patron_error": {
+    "latex": "\\int x^{2} e^{x} \\, dx:\\\\ \\begin{cases} u = x^{2}, \\ dv = e^{x} \\, dx \\\\ du = 2x \\, dx, \\ v = e^{x} \\end{cases} \\\\ \\implies x^{2} e^{x} - \\int e^{x} \\cdot x \\, dx \\\\ \\text{(Error: se usa } x \\text{ en lugar de } 2x\\text{)}",
+    "explicacion": "Después de la primera aplicación, cuando se integra ∫v du = ∫e^x · 2x dx, se olvida que du = 2x dx y se integra como si fuera ∫e^x · x dx."
+  },
+  "deteccion": {
+    "tipo": "Verificación algebraica y dimensional",
+    "reglas": [
+      "Verificar que cada término tenga las unidades correctas",
+      "Contar el grado de los polinomios en cada paso",
+      "Comparar con la solución conocida o verificar numéricamente",
+      "Revisar que du sea efectivamente la derivada de u"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Mantener un seguimiento sistemático de u y sus derivadas en cada aplicación, anotando claramente du en cada paso",
+    "pistas": [
+      "Después de elegir u y dv, escribe inmediatamente du = d(u)",
+      "En cada paso siguiente, usa la du calculada, no una versión 'simplificada'",
+      "Mantén una tabla con u, dv, du, v en cada iteración",
+      "Verifica dimensionalmente: si u tiene grado n, du debe tener grado n-1"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Ejemplo: } \\int x^{2} e^{x} \\, dx\\\\ \\begin{array}{c|c|c|c} \\text{Paso} & u & dv & du \\\\ \\hline 1 & x^{2} & e^{x}\\,dx & 2x\\,dx \\\\ 2 & 2x & e^{x}\\,dx & 2\\,dx \\\\ 3 & 2 & e^{x}\\,dx & 0 \\end{array}",
+      "nota": "En aplicaciones múltiples, u cambia completamente en cada paso. No uses la u original en pasos posteriores. Cada fila de la tabla es independiente."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Calcula ∫x² e^x dx siguiendo correctamente cada derivada de u",
+      "solucion": "Primera aplicación: u = x², dv = e^x dx → du = 2x dx, v = e^x → x² e^x - ∫e^x · 2x dx. Segunda aplicación: u = 2x, dv = e^x dx → du = 2 dx, v = e^x → 2x e^x - ∫e^x · 2 dx. Tercera: 2 e^x - 2 e^x + C = 2 e^x (x² - x + 1) + C",
+      "dificultad": "media"
+    },
+    {
+      "enunciado": "Compara el resultado correcto de ∫x² e^x dx con uno donde se olvida derivar u",
+      "solucion": "Resultado correcto: e^x (x² - 2x + 2) + C. Error común: olvidar que du = 2x dx lleva a e^x (x² - x + 1) + C, que al derivar da e^x (2x - 1 + x²) ≠ x² e^x.",
+      "dificultad": "alta"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Derivación término a término",
+    "sugerido": "Deriva cada término de la solución final y verifica que la suma sea igual al integrando original",
+    "criterio": "Cada coeficiente debe corresponder correctamente con las derivadas acumuladas"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integración por partes",
+      "aplicación múltiple",
+      "derivada de u",
+      "error algebraico",
+      "seguimiento de variables",
+      "semana 1",
+      "error común",
+      "iterativo"
+    ]
+  }
+}

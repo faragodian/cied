@@ -1,0 +1,46 @@
+{
+  "id": "sustitucion-trigonometrica-eleccion-caso",
+  "curso": "Cálculo Integral",
+  "tema": "Sustitución trigonométrica",
+  "subtema": "Elección del caso adecuado",
+  "titulo": "Error en la elección del caso trigonométrico correcto",
+  "descripcion_corta": "Se elige la sustitución trigonométrica incorrecta para el tipo de expresión bajo la raíz cuadrada.",
+  "prerrequisitos": ["Sustitución trigonométrica", "Formas trigonométricas"],
+  "sintomas": ["La sustitución no simplifica la integral", "Resultado más complejo que el original", "No se puede completar la resolución"],
+  "patron_error": {
+    "latex": "\\int \\frac{dx}{\\sqrt{x^2 - 9}} \\implies x = 3 \\sin \\theta \\quad (\\text{incorrecto, debería ser } x = 3 \\cosh \\theta)",
+    "explicacion": "Para √(x² - a²) se usa coseno hiperbólico, no seno trigonométrico"
+  },
+  "deteccion": {
+    "tipo": "Análisis de la forma",
+    "reglas": ["√(a² - x²): usar x = a sin θ", "√(x² - a²): usar x = a cosh θ", "√(x² + a²): usar x = a sinh θ"],
+    "criterio": "La sustitución debe eliminar la raíz cuadrada"
+  },
+  "remediacion": {
+    "estrategia": "Memorizar las tres formas trigonométricas básicas",
+    "pistas": ["a² - x² → seno", "x² - a² → coseno hiperbólico", "x² + a² → seno hiperbólico"],
+    "mini_leccion": {
+      "latex": "\\sqrt{a^2 - x^2} \\implies x = a \\sin \\theta \\quad (0 \\leq \\theta \\leq \\pi)",
+      "nota": "Memorizar: a²-x² → seno, x²-a² → cosh, x²+a² → sinh"
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Elige la sustitución correcta para: ∫ dx/√(x² - 4)",
+      "solucion": "x = 2 cosh θ (o equivalentemente x = 2 sec θ)",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Verificación geométrica",
+    "sugerido": "Verificar que la sustitución elimina la raíz",
+    "criterio": "Después de sustituir, no debe quedar raíz cuadrada"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema CIED",
+    "creado": "2024-01-20",
+    "actualizado": "2024-01-20",
+    "tags": ["sustitución trigonométrica", "elección caso", "formas trigonométricas"]
+  }
+}

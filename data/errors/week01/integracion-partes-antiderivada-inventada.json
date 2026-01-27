@@ -1,0 +1,77 @@
+{
+  "id": "integracion-partes-antiderivada-inventada",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Integración por partes",
+  "titulo": "Inventar antiderivadas o reglas sin justificación matemática",
+  "descripcion_corta": "Al resolver integrales, se crea una 'regla' o antiderivada que parece razonable pero no tiene fundamento matemático, sin verificar por derivación.",
+  "prerrequisitos": [
+    "Entendimiento de que toda antiderivada debe verificarse por derivación",
+    "Conocimiento de las reglas básicas de integración",
+    "Comprensión de que no se pueden 'inventar' fórmulas sin demostración"
+  ],
+  "sintomas": [
+    "Aparecen antiderivadas que 'parecen correctas' pero fallan en la verificación",
+    "Se usan patrones o reglas que no están en los libros de cálculo",
+    "La solución no se puede derivar para obtener la integral original",
+    "Se confunde con identidades o reglas de otras áreas de las matemáticas"
+  ],
+  "patron_error": {
+    "latex": "\\int x e^{x} \\, dx = \\frac{1}{2} x^{2} e^{x} + C \\quad \\text{(¿por qué?)}",
+    "explicacion": "Se 'inventa' una regla como 'la antiderivada de x e^x es (1/2)x² e^x' sin justificación matemática, confundiendo tal vez con otras reglas o patrones algebraicos."
+  },
+  "deteccion": {
+    "tipo": "Verificación por derivación sistemática",
+    "reglas": [
+      "Derivar cualquier antiderivada propuesta y verificar que da la integral original",
+      "Buscar si la 'regla' aparece en referencias matemáticas confiables",
+      "Contar si se usan exponentes o coeficientes que no corresponden a las reglas conocidas",
+      "Revisar si se confunden reglas de integración con reglas de derivación"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Siempre verificar cualquier antiderivada por derivación, y recordar que las reglas de integración deben estar fundamentadas matemáticamente",
+    "pistas": [
+      "Si dudas de una antiderivada, dérivala y verifica que obtengas la integral original",
+      "Las reglas de integración están en los libros por una razón: han sido demostradas",
+      "No inventes patrones algebraicos para integrales; cada técnica tiene fundamentos específicos",
+      "Si algo parece demasiado 'fácil' o 'elegante', probablemente sea incorrecto"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Verificación obligatoria: si } F(x) \\text{ es antiderivada de } f(x), \\text{ entonces } F'(x) = f(x)\\\\ \\text{Ejemplo problemático: } \\frac{d}{dx}\\left(\\frac{1}{2} x^{2} e^{x}\\right) = x e^{x} + \\frac{1}{2} x^{2} e^{x} \\neq x e^{x}\\\\ \\text{Regla correcta: } \\int x e^{x} \\, dx = e^{x}(x - 1) + C",
+      "nota": "Inventar antiderivadas sin verificación es como creer que 2+2=5 porque 'parece razonable'. Siempre verifica por derivación antes de confiar en cualquier resultado."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Verifica si ∫x e^x dx = (1/2)x² e^x + C es correcto",
+      "solucion": "Derivada: d/dx[(1/2)x² e^x] = x e^x + (1/2)x² e^x = e^x(x + x²/2) ≠ x e^x. Incorrecto. La respuesta correcta es e^x(x-1) + C.",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "¿Por qué ∫sen x dx = cos x + C es correcto pero ∫sen x dx = -sen x + C sería inventado?",
+      "solucion": "d/dx[cos x] = -sen x, pero ∫sen x dx debe dar algo cuya derivada sea sen x. d/dx[-cos x] = sen x, así que es correcto. -sen x sería incorrecto porque d/dx[-sen x] = -cos x ≠ sen x.",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Derivación y comparación",
+    "sugerido": "Para cualquier F(x) que propongas como antiderivada, calcula F'(x) y verifica que sea igual a la integral original",
+    "criterio": "La derivada de la antiderivada debe ser idéntica a la función integrada"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integración por partes",
+      "verificación por derivación",
+      "reglas inventadas",
+      "error conceptual",
+      "antiderivadas falsas",
+      "semana 1",
+      "validación matemática"
+    ]
+  }
+}

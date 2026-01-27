@@ -1,0 +1,46 @@
+{
+  "id": "sustitucion-trig-limites-olvidados",
+  "curso": "Cálculo Integral",
+  "tema": "Sustitución trigonométrica",
+  "subtema": "Integrales definidas con sustitución trigonométrica",
+  "titulo": "Error al olvidar cambiar los límites en integrales definidas",
+  "descripcion_corta": "En integrales definidas con sustitución trigonométrica, se olvida cambiar los límites de integración a la nueva variable.",
+  "prerrequisitos": ["Sustitución trigonométrica", "Integrales definidas", "Cambio de variable"],
+  "sintomas": ["Resultado numérico incorrecto", "Límites originales usados con nueva variable", "Integral evaluada en límites inconsistentes"],
+  "patron_error": {
+    "latex": "\\int_{0}^{1} \\frac{dx}{\\sqrt{4 - x^2}} = \\int_{0}^{1} d\\theta = \\theta \\Big|_{0}^{1} \\quad (\\text{incorrecto, límites no cambiados})",
+    "explicacion": "Se evalúa la integral en los límites originales en lugar de los correspondientes a la nueva variable"
+  },
+  "deteccion": {
+    "tipo": "Verificación de límites",
+    "reglas": ["Después de cambiar variable, cambiar límites", "Los límites nuevos deben corresponder a los valores de la nueva variable", "Verificar que θ inicial = θ(x inicial)"],
+    "criterio": "Los límites deben ser consistentes con la sustitución realizada"
+  },
+  "remediacion": {
+    "estrategia": "Recordar cambiar límites después de la sustitución",
+    "pistas": ["Para x = a sin θ, cambiar x = a → θ = π/2, x = -a → θ = -π/2", "Los nuevos límites se obtienen aplicando la sustitución inversa", "Dibujar el triángulo de referencia ayuda"],
+    "mini_leccion": {
+      "latex": "\\int_{a}^{b} f(x) dx = \\int_{\\theta_1}^{\\theta_2} f(a \\sin \\theta) \\cdot a \\cos \\theta \\, d\\theta",
+      "nota": "Los límites θ₁ y θ₂ se obtienen de x = a, x = b aplicando la sustitución inversa"
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Resuelve: ∫₀² √(4 - x²) dx",
+      "solucion": "x = 2 sin θ, cuando x=0 → θ=0, cuando x=2 → θ=π/2. dx = 2 cos θ dθ. ∫₀^{π/2} √(4 - 4 sin² θ) * 2 cos θ dθ = ∫₀^{π/2} 2 |cos θ| * 2 cos θ dθ = ∫₀^{π/2} 4 cos² θ dθ = 2∫₀^{π/2} (1 + cos 2θ)/2 dθ = ∫₀^{π/2} (1 + cos 2θ) dθ = [θ + (1/2) sin 2θ]₀^{π/2} = (π/2 + 0) - 0 = π/2",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Evaluación numérica",
+    "sugerido": "Comparar resultado con aproximación numérica de la integral original",
+    "criterio": "El resultado debe coincidir con el valor geométrico (área de cuarto de círculo de radio 2)"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema CIED",
+    "creado": "2024-01-20",
+    "actualizado": "2024-01-20",
+    "tags": ["sustitución trigonométrica", "integrales definidas", "cambio de límites"]
+  }
+}

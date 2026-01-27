@@ -1,0 +1,78 @@
+{
+  "id": "sustitucion-trigonometrica-incorrecta",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Sustitución trigonométrica",
+  "titulo": "Elección incorrecta de la sustitución trigonométrica",
+  "descripcion_corta": "Se aplica una sustitución trigonométrica incorrecta para la forma del integrando, complicando innecesariamente la resolución o haciendo imposible la integración.",
+  "prerrequisitos": [
+    "Formas estándar para sustitución trigonométrica",
+    "√(a² − x²) requiere x = a sen θ o x = a cos θ",
+    "√(a² + x²) requiere x = a tan θ",
+    "√(x² − a²) requiere x = a sec θ"
+  ],
+  "sintomas": [
+    "La sustitución no simplifica la expresión trigonométrica",
+    "Aparecen formas trigonométricas más complicadas que la original",
+    "La integral transformada no se puede resolver con técnicas conocidas",
+    "Se requiere aplicar múltiples identidades trigonométricas adicionales"
+  ],
+  "patron_error": {
+    "latex": "\\int \\frac{dx}{\\sqrt{4 - x^{2}}} \\implies x = 2 \\tan \\theta \\quad (\\text{incorrecto})",
+    "explicacion": "Para √(a² − x²) se debe usar x = a sen θ o x = a cos θ, no x = a tan θ. La sustitución tangente corresponde a √(a² + x²)."
+  },
+  "deteccion": {
+    "tipo": "Verificación de correspondencia forma-sustitución",
+    "reglas": [
+      "Identificar si el integrando tiene forma √(a² − x²), √(a² + x²), o √(x² − a²)",
+      "Verificar que se use la sustitución correcta para cada forma",
+      "Comprobar que la expresión trigonométrica resultante se simplifique",
+      "Contar si se requieren más pasos algebraicos de los necesarios"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Memorizar las sustituciones estándar: sen para diferencia, tan para suma, sec para resta, y aplicar la que corresponda exactamente a la forma del integrando",
+    "pistas": [
+      "√(a² − x²): usa x = a sen θ (o cos θ)",
+      "√(a² + x²): usa x = a tan θ",
+      "√(x² − a²): usa x = a sec θ",
+      "Si la sustitución complica la expresión, es la incorrecta"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Sustituciones trigonométricas estándar:}\\\\ \\sqrt{a^{2} - x^{2}} \\implies x = a \\sin \\theta \\quad (\\text{o } x = a \\cos \\theta)\\\\ \\sqrt{a^{2} + x^{2}} \\implies x = a \\tan \\theta\\\\ \\sqrt{x^{2} - a^{2}} \\implies x = a \\sec \\theta\\\\ \\text{Ejemplo incorrecto: } \\int \\frac{dx}{\\sqrt{9 - x^{2}}} \\implies x = 3 \\tan \\theta \\quad (\\text{¡error!)}",
+      "nota": "Cada forma requiere su sustitución específica. √(a² − x²) siempre requiere seno o coseno, nunca tangente. Si usas la sustitución equivocada, la integral no se simplificará."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Elige la sustitución correcta para ∫ dx / √(16 − x²)",
+      "solucion": "Forma √(a² − x²) con a = 4. Sustitución correcta: x = 4 sen θ (o x = 4 cos θ). Resultado: ∫ dθ = θ + C = arc sen(x/4) + C",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "¿Por qué es incorrecto usar x = 2 tan θ para ∫ dx / √(4 − x²)?",
+      "solucion": "x = 2 tan θ daría √(4 − (2 tan θ)²) = √(4 − 4 tan² θ) = √(4(1 − tan² θ)) = 2 √(cos² θ / cos² θ) = 2 |cos θ|, pero dx = 2 sec² θ dθ. La integral se complica enormemente en lugar de simplificarse.",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Verificación de simplificación",
+    "sugerido": "Después de la sustitución, la expresión trigonométrica debe simplificarse significativamente",
+    "criterio": "La integral transformada debe ser más simple que la original"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "sustitución trigonométrica",
+      "elección de sustitución",
+      "formas estándar",
+      "√(a² − x²)",
+      "√(a² + x²)",
+      "error conceptual",
+      "semana 1"
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "id": "integracion-partes-innecesaria",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Integración por partes",
+  "titulo": "Aplicar integración por partes cuando la integral se puede resolver directamente",
+  "descripcion_corta": "Se aplica integración por partes a integrales que se pueden resolver usando técnicas más simples como sustitución, potencias o identidades básicas.",
+  "prererequisitos": [
+    "Reconocimiento de integrales que se resuelven por sustitución",
+    "Identificación de integrales de potencias y funciones elementales",
+    "Entendimiento de cuándo usar cada técnica de integración"
+  ],
+  "sintomas": [
+    "La solución obtenida es correcta pero innecesariamente compleja",
+    "Se requieren múltiples pasos cuando bastaría uno",
+    "Aparecen términos que se cancelan dejando una solución simple",
+    "El proceso algebraico es mucho más largo que el necesario"
+  ],
+  "patron_error": {
+    "latex": "\\int x^{2} \\, dx \\implies \\begin{cases} u = x^{2}, \\ dv = dx \\\\ du = 2x \\, dx, \\ v = x \\end{cases} \\\\ \\implies x \\cdot x^{2} - \\int x \\cdot 2x \\, dx = x^{3} - 2\\int x^{2} \\, dx",
+    "explicacion": "Se aplica integración por partes a ∫x² dx, que se resuelve directamente como (1/3)x³ + C, complicando innecesariamente con una ecuación recursiva."
+  },
+  "deteccion": {
+    "tipo": "Análisis de complejidad vs. resultado",
+    "reglas": [
+      "Preguntar: ¿esta integral se puede resolver con técnicas más básicas?",
+      "Verificar si el resultado final es una función elemental simple",
+      "Contar los pasos: si son más de 3 para una integral 'sencilla', sospechar",
+      "Comparar con integrales similares conocidas"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Antes de aplicar cualquier técnica avanzada, verificar si la integral se puede resolver con métodos elementales, siguiendo una jerarquía de técnicas",
+    "pistas": [
+      "Primero: ¿es una integral inmediata (potencias, constantes)?",
+      "Segundo: ¿se resuelve por sustitución simple?",
+      "Tercero: ¿requiere identidades trigonométricas?",
+      "Cuarto: recién entonces, considerar integración por partes",
+      "Si la integral resultante es similar a la original, es señal de error"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Jerarquía de técnicas de integración:}\\\\ 1.\\ \\text{Reglas básicas: } \\int x^{n}\\,dx = \\frac{x^{n+1}}{n+1} + C\\\\ 2.\\ \\text{Sustitución: } \\int f(g(x)) g'(x)\\,dx = \\int f(u)\\,du\\\\ 3.\\ \\text{Identidades trigonométricas}\\\\ 4.\\ \\text{Integración por partes (último recurso)}",
+      "nota": "La integración por partes es una técnica poderosa pero no debería ser la primera opción. Muchas integrales que parecen requerirla se pueden resolver más simplemente."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Calcula ∫x² dx usando el método más simple posible",
+      "solucion": "∫x² dx = (1/3)x³ + C. No requiere integración por partes ni ningún otro método avanzado.",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Compara la resolución de ∫e^x dx por diferentes métodos",
+      "solucion": "Resolución directa: ∫e^x dx = e^x + C. Usando integración por partes: u = 1, dv = e^x dx → du = 0, v = e^x → 1·e^x - ∫e^x·0 dx = e^x + C. El método directo es más eficiente.",
+      "dificultad": "media"
+    },
+    {
+      "enunciado": "Encuentra una integral donde la integración por partes SÍ es necesaria",
+      "solucion": "∫x e^x dx requiere integración por partes porque el producto x·e^x no se puede integrar directamente. u = x, dv = e^x dx → du = dx, v = e^x → x e^x - ∫e^x dx = e^x (x - 1) + C",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Comparación con métodos alternativos",
+    "sugerido": "Resolver la misma integral usando diferentes técnicas y comparar resultados",
+    "criterio": "La solución debe ser consistente independientemente del método usado, pero la complejidad debe ser proporcional a la dificultad real"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integración por partes",
+      "elección de técnica",
+      "sobrecomplicación",
+      "jerarquía de métodos",
+      "error conceptual",
+      "eficiencia",
+      "semana 1",
+      "diagnóstico de técnica"
+    ]
+  }
+}

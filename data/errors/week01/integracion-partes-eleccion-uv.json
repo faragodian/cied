@@ -1,0 +1,77 @@
+{
+  "id": "integracion-partes-eleccion-uv",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Integración por partes",
+  "titulo": "Elección incorrecta de u y dv en integración por partes",
+  "descripcion_corta": "Al aplicar integración por partes, se elige incorrectamente qué función asignar a u y cuál a dv, complicando innecesariamente el cálculo o haciendo imposible la integración.",
+  "prerrequisitos": [
+    "Fórmula de integración por partes: ∫u dv = uv - ∫v du",
+    "Criterios para elegir u: función que se simplifica al derivar",
+    "Criterios para elegir dv: función que se puede integrar fácilmente"
+  ],
+  "sintomas": [
+    "La integral resultante se vuelve más complicada que la original",
+    "Aparecen integrales que no se pueden resolver con las técnicas conocidas",
+    "Se requiere aplicar integración por partes múltiples veces innecesariamente",
+    "La solución final parece incorrecta o demasiado compleja"
+  ],
+  "patron_error": {
+    "latex": "\\int x e^{x} \\, dx \\implies \\begin{cases} u = e^{x} \\\\ dv = x \\, dx \\end{cases} \\implies \\int v \\, du = \\int e^{x} \\cdot 1 \\, dx = e^{x} + C",
+    "explicacion": "Se elige u = e^x (que se deriva fácilmente) pero dv = x dx (que requiere integración por partes nuevamente), cuando debería ser u = x (se deriva a 1) y dv = e^x dx (se integra a e^x)."
+  },
+  "deteccion": {
+    "tipo": "Análisis de dificultad relativa",
+    "reglas": [
+      "Verificar si la integral resultante ∫v du es más difícil que la original",
+      "Comprobar si u se puede derivar fácilmente (polinomios, logaritmos, etc.)",
+      "Evaluar si dv se puede integrar directamente",
+      "Contar si se requieren más de 2-3 aplicaciones de integración por partes"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Aplicar sistemáticamente la regla LIATE (Logaritmos, Inversas trigonométricas, Algebraicas, Trigonométricas, Exponenciales) para elegir u, dejando dv como el término más fácil de integrar",
+    "pistas": [
+      "Recuerda: u debe ser una función que se simplifique al derivar",
+      "dv debe ser una función que puedas integrar directamente",
+      "Si la integral resultante es más complicada, intercambia u y dv",
+      "Usa la regla mnemotécnica: elige u como la función que viene 'antes' en LIATE"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Regla LIATE para elegir } u:\\\\ \\text{L: Logaritmos, I: Inversas trigonométricas, A: Algebraicas, T: Trigonométricas, E: Exponenciales}\\\\ \\int x e^{x} \\, dx: \\quad u = x, \\quad dv = e^{x} \\, dx",
+      "nota": "En ∫x e^x dx, x es algebraica (A) y e^x es exponencial (E). Como A viene antes que E en LIATE, u = x. Esta regla no es infalible pero es un buen punto de partida."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Calcula ∫x e^x dx usando la elección correcta de u y dv",
+      "solucion": "u = x, dv = e^x dx → du = dx, v = e^x. Fórmula: uv - ∫v du = x e^x - ∫e^x dx = x e^x - e^x + C = e^x (x - 1) + C",
+      "dificultad": "baja"
+    },
+    {
+      "enunciado": "Compara: ∫x e^x dx con la elección incorrecta u = e^x, dv = x dx",
+      "solucion": "u = e^x, dv = x dx → du = e^x dx, v = (1/2)x². Fórmula: uv - ∫v du = e^x · (1/2)x² - ∫(1/2)x² e^x dx. La integral resultante es más complicada.",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Derivación de la solución obtenida",
+    "sugerido": "Deriva la respuesta y verifica que obtengas el integrando original",
+    "criterio": "d/dx[F(x)] = f(x) donde f(x) es el integrando original"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integración por partes",
+      "elección de variables",
+      "regla LIATE",
+      "técnicas de integración",
+      "semana 1",
+      "error común",
+      "procedimental"
+    ]
+  }
+}

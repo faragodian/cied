@@ -1,0 +1,77 @@
+{
+  "id": "integrales-trig-paridad",
+  "curso": "MATE-1214",
+  "tema": "Técnicas de integración",
+  "subtema": "Integrales trigonométricas",
+  "titulo": "Aplicación incorrecta de la regla de paridad en integrales trigonométricas",
+  "descripcion_corta": "Al integrar expresiones de la forma ∫sen^m x cos^n x dx, se aplica incorrectamente la regla de paridad (m impar/n par o m par/n impar) o se olvida aplicarla cuando corresponde.",
+  "prerrequisitos": [
+    "Regla de paridad: si m es impar, escribir sen^m x = sen^{m-1} x · sen x y usar u = cos x",
+    "Regla de paridad: si n es impar, escribir cos^n x = cos^{n-1} x · cos x y usar u = sen x",
+    "Identidades trigonométricas básicas: sen²x + cos²x = 1"
+  ],
+  "sintomas": [
+    "La integral parece 'atascada' sin poder resolverse con técnicas conocidas",
+    "Se intenta usar identidades complejas cuando bastaría la regla de paridad",
+    "Aparecen términos que no se pueden integrar directamente",
+    "La solución es mucho más complicada de lo esperado"
+  ],
+  "patron_error": {
+    "latex": "\\int \\sen^{3} x \\, dx \\implies \\text{(se intenta integrar directamente sin regla de paridad)}\\\\ \\text{En lugar de: } \\int \\sen^{3} x \\, dx = \\int \\sen^{2} x \\cdot \\sen x \\, dx = \\int (1 - \\cos^{2} x) \\sen x \\, dx",
+    "explicacion": "Se olvida que cuando el exponente de sen x es impar (3 = impar), se debe escribir sen³x = sen²x · sen x y usar la sustitución u = cos x, ya que la derivada de cos x es -sen x."
+  },
+  "deteccion": {
+    "tipo": "Análisis de paridad de exponentes",
+    "reglas": [
+      "Verificar si al menos uno de los exponentes m o n es impar",
+      "Comprobar si se está usando sustitución trigonométrica compleja cuando bastaría la regla de paridad",
+      "Contar si aparecen más de 2-3 pasos cuando debería resolverse en 1-2",
+      "Revisar si se está intentando integrar directamente sen^m x o cos^n x sin separación"
+    ]
+  },
+  "remediacion": {
+    "estrategia": "Aplicar sistemáticamente la regla de paridad antes de considerar otras técnicas: si m impar, reserva un factor sen x; si n impar, reserva un factor cos x",
+    "pistas": [
+      "Primero: identifica los exponentes m y n en sen^m x cos^n x",
+      "Segundo: si m es impar, escribe sen^m x = sen^{m-1} x · sen x",
+      "Tercero: si n es impar, escribe cos^n x = cos^{n-1} x · cos x",
+      "Cuarto: usa la sustitución correspondiente (u = cos x o u = sen x)"
+    ],
+    "mini_leccion": {
+      "latex": "\\text{Regla de paridad para } \\int \\sen^{m} x \\cos^{n} x \\, dx:\\\\ \\begin{cases} \\text{Si } m \\text{ impar: } \\sen^{m} x = \\sen^{m-1} x \\cdot \\sen x, \\quad u = \\cos x \\\\ \\text{Si } n \\text{ impar: } \\cos^{n} x = \\cos^{n-1} x \\cdot \\cos x, \\quad u = \\sen x \\end{cases}",
+      "nota": "La regla de paridad reduce la complejidad porque convierte una integral aparentemente difícil en una simple sustitución. Siempre verifica la paridad de los exponentes primero."
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Calcula ∫sen³x dx usando la regla de paridad correcta",
+      "solucion": "sen³x = sen²x · sen x = (1 - cos²x) · sen x. Sea u = cos x, entonces du = -sen x dx → -du = sen x dx. Resultado: ∫(1 - u²)(-du) = -∫(1 - u²)du = -[u - (1/3)u³] + C = -cos x + (1/3)cos³x + C",
+      "dificultad": "media"
+    },
+    {
+      "enunciado": "Calcula ∫cos⁵x dx aplicando correctamente la regla de paridad",
+      "solucion": "cos⁵x = cos⁴x · cos x = (cos²x)² · cos x = [(1 + cos 2x)/2]² · cos x. Sea u = sen x, du = cos x dx. Resultado: ∫u⁴ du = (1/5)u⁵ + C = (1/5)sen⁵x + C",
+      "dificultad": "alta"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Derivación y comparación",
+    "sugerido": "Deriva tu resultado y verifica que obtengas la expresión trigonométrica original",
+    "criterio": "La derivada debe reproducir exactamente la integral original"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema cied",
+    "creado": "2024-01-15",
+    "actualizado": "2024-01-15",
+    "tags": [
+      "integrales trigonométricas",
+      "regla de paridad",
+      "sen^m cos^n",
+      "exponentes impares",
+      "sustitución trigonométrica",
+      "semana 2",
+      "error procedimental"
+    ]
+  }
+}

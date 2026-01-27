@@ -1,0 +1,46 @@
+{
+  "id": "sustitucion-trig-identidad-mal",
+  "curso": "Cálculo Integral",
+  "tema": "Sustitución trigonométrica",
+  "subtema": "Aplicación de identidades trigonométricas",
+  "titulo": "Error en la aplicación de identidades trigonométricas en sustitución",
+  "descripcion_corta": "Durante la sustitución trigonométrica, se comete un error al aplicar identidades trigonométricas básicas.",
+  "prerrequisitos": ["Identidades trigonométricas fundamentales", "Sustitución trigonométrica"],
+  "sintomas": ["Resultado algebraico incorrecto", "Expresión no se simplifica", "Integral queda en forma complicada"],
+  "patron_error": {
+    "latex": "x = a \\sin \\theta, \\quad \\sqrt{a^2 - x^2} = \\sqrt{a^2 - a^2 \\sin^2 \\theta} = \\sqrt{a^2 \\cos^2 \\theta} = a \\cos \\theta",
+    "explicacion": "Se olvida que la raíz cuadrada puede ser positiva o negativa, o se aplica identidad incorrecta"
+  },
+  "deteccion": {
+    "tipo": "Verificación trigonométrica",
+    "reglas": ["√(cos²θ) = |cos θ| en integrales indefinidas", "Considerar el dominio de la función", "Mantener consistencia con la sustitución"],
+    "criterio": "La simplificación debe mantener la equivalencia matemática"
+  },
+  "remediacion": {
+    "estrategia": "Revisar aplicación de identidades trigonométricas",
+    "pistas": ["√(a² - x²) con x = a sin θ → √(a² cos² θ) = |a cos θ|", "Para integrales indefinidas, usar |cos θ|", "Verificar dominio: -1 ≤ sin θ ≤ 1"],
+    "mini_leccion": {
+      "latex": "\\sqrt{a^2 - x^2} \\implies x = a \\sin \\theta, \\quad \\sqrt{a^2(1 - \\sin^2 \\theta)} = a |\\cos \\theta|",
+      "nota": "El valor absoluto es crucial para mantener la positividad de la raíz"
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Resuelve: ∫ √(4 - x²) dx",
+      "solucion": "x = 2 sin θ, dx = 2 cos θ dθ, ∫ √(4 - 4 sin² θ) * 2 cos θ dθ = ∫ 2 |cos θ| * 2 cos θ dθ = ∫ 4 cos² θ dθ = 2∫(1 + cos 2θ)/2 dθ = 2(θ/2 + sin 2θ/4) + C = θ + (1/2) sin θ cos θ + C = arcsin(x/2) + (x/4) √(4 - x²)/2 + C",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Derivación",
+    "sugerido": "Derivar la respuesta y verificar que se obtiene el integrando original",
+    "criterio": "d/dx[arcsin(x/2) + (x/4) √(4 - x²)/2] = √(4 - x²)"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema CIED",
+    "creado": "2024-01-20",
+    "actualizado": "2024-01-20",
+    "tags": ["sustitución trigonométrica", "identidades trigonométricas", "error algebraico"]
+  }
+}

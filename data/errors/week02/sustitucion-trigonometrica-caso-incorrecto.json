@@ -1,0 +1,46 @@
+{
+  "id": "sustitucion-trigonometrica-caso-incorrecto",
+  "curso": "Cálculo Integral",
+  "tema": "Sustitución trigonométrica",
+  "subtema": "Elección del caso trigonométrico",
+  "titulo": "Error en la elección del caso trigonométrico en sustitución",
+  "descripcion_corta": "Al resolver integrales con expresiones de la forma √(a² ± x²), se elige incorrectamente el caso trigonométrico.",
+  "prerrequisitos": ["Identificación de formas trigonométricas", "Sustitución trigonométrica"],
+  "sintomas": ["La integral resulta más complicada", "No se puede completar la sustitución", "Resultado algebraico inconsistente"],
+  "patron_error": {
+    "latex": "\\int \\frac{dx}{\\sqrt{x^2 + a^2}} \\implies x = a \\tan \\theta \\quad (\\text{incorrecto, debería ser } x = a \\sinh \\theta)",
+    "explicacion": "Para √(x² + a²) se debe usar sustitución hiperbólica, no trigonométrica"
+  },
+  "deteccion": {
+    "tipo": "Verificación algebraica",
+    "reglas": ["Identificar forma √(x² ± a²)", "Elegir caso correcto: x²+a²→sinh, x²-a²→cosh, a²-x²→trig"],
+    "criterio": "La sustitución debe simplificar la expresión bajo la raíz"
+  },
+  "remediacion": {
+    "estrategia": "Revisar identificación del caso trigonométrico",
+    "pistas": ["Para √(x² + a²): usar x = a sinh θ", "Para √(x² - a²): usar x = a cosh θ", "Para √(a² - x²): usar x = a sin θ"],
+    "mini_leccion": {
+      "latex": "\\sqrt{x^2 + a^2} \\implies x = a \\sinh \\theta",
+      "nota": "Memorizar: x²+a² → hiperbólico, a²-x² → trigonométrico"
+    }
+  },
+  "ejercicio_correctivo": [
+    {
+      "enunciado": "Resuelve: ∫ dx/√(x² + 4)",
+      "solucion": "x = 2 sinh θ, dx = 2 cosh θ dθ, ∫ 2 cosh θ dθ / (2 cosh θ) = ∫ dθ = θ + C = arcsinh(x/2) + C",
+      "dificultad": "media"
+    }
+  ],
+  "verificacion": {
+    "metodo": "Sustitución directa",
+    "sugerido": "Derivar la respuesta para verificar que da el integrando original",
+    "criterio": "d/dx[arcsinh(x/2)] = 1/√(x² + 4)"
+  },
+  "metadata": {
+    "version": "1.0",
+    "autor": "Sistema CIED",
+    "creado": "2024-01-20",
+    "actualizado": "2024-01-20",
+    "tags": ["sustitución trigonométrica", "caso incorrecto", "integral definida"]
+  }
+}

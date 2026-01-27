@@ -192,3 +192,8 @@ cloudflared.log
 gunicorn.conf.py
 nginx.conf
 
+.env
+*.bk
+*.backup*
+__pycache__/
+*.pyc
