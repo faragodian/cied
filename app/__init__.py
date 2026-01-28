@@ -31,6 +31,12 @@ def create_app(config_class=Config):
 
     app.register_blueprint(core_bp)
     app.register_blueprint(errors_bp, url_prefix="/errors")
+    # Registrar blueprint de quizzes (rutas /quiz/...)
+    try:
+        from .blueprints.quiz import quiz_bp  # noqa: F401
+        app.register_blueprint(quiz_bp)
+    except Exception as e:
+        logger.warning(f"No se pudo registrar blueprint 'quiz': {e}")
 
     # Configurar ruta estática para docs
     docs_dir = app.config['DOCS_DIR']
