@@ -1,19 +1,1 @@
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
-
-class Config:
-    SECRET_KEY = os.environ.get("SECRET_KEY", "pon-aqui-tu-clave-secreta-en-produccion")
-    FLASK_ENV = os.environ.get("FLASK_ENV", "production")
-    DEBUG = FLASK_ENV == "development"
-    # Otras configuraciones que tengas...
-    
-    # Configuración de LLM (si usas)
-    LLM_API_KEY = os.environ.get("LLM_API_KEY", "")
-    LLM_MODEL = os.environ.get("LLM_MODEL", "gpt-4")
-    
-    # Configuración de base de datos (si usas)
-    DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///cied.db")
-    
-    # Otras variables...
