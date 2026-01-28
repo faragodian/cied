@@ -39,5 +39,4 @@ def create_app(config_class=Config):
 
 
     logger.info("Aplicación cied inicializada correctamente")
-
     return app
