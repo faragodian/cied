@@ -197,3 +197,4 @@ nginx.conf
 *.backup*
 __pycache__/
 *.pyc
+config.py
